@@ -1,0 +1,63 @@
+- imageTypes = [".jpeg", ".JFIF", ".jpeg2000", ".exif", ".tiff", ".raw", ".gif", ".bmp", ".png"]
+- wordTypes = [".doc", ".docx", ".rtf"]
+- xlsTypes = [".xls", ".xlsx"]
+- pdfTypes = [".pdf"]
+- pptTypes = [".ppt", ".pptx", ".ppsx"]
+- zipTypes = [".zip", ".rar", ".7z", ".tar", ".zipx"]
+
+.contextual
+  - if User.current.allowed_to?(:edit_documents, @project)
+    = link_to l(:button_edit), edit_document_path(@document), :class => 'icon icon-edit', :accesskey => accesskey(:edit)
+  - if User.current.allowed_to?(:delete_documents, @project)
+    = delete_link document_path(@document)
+
+.project-marge
+.project-documents
+      .project-documents-title
+        = DocumentCategory.find(@document.category_id).name
+      .project-documents-list
+        ul
+          li.document
+            .document-files.document-cell
+              - if @document.url_to
+                  = link_to @document.url_to, target: "_blank", title: @document.url_to do
+                    .document-file.icon-file-link
+              - @document.attachments.each do |a|
+                = link_to a, target: "_blank", title: a.filename do
+                  - ext = File.extname(a.filename)
+                  - if imageTypes.include?(ext)
+                    .document-file.icon-file-image
+                  - elsif wordTypes.include?(ext)
+                    .document-file.icon-file-word
+                  - elsif xlsTypes.include?(ext)
+                    .document-file.icon-file-excel
+                  - elsif pdfTypes.include?(ext)
+                    .document-file.icon-file-pdf
+                  - elsif pptTypes.include?(ext)
+                    .document-file.icon-file-powerpoint
+                  - elsif zipTypes.include?(ext)
+                    .document-file.icon-file-zip
+                  - else
+                    .document-file.icon-file-default
+            .document-infos.document-cell
+              .document-info-header
+                .document-info-title
+                  = @document.title
+                .document-info-tags
+                  - @document.tag_list.each do |t|
+                    .document-info-tag
+                      = t
+              .document-info-resume
+                = @document.description
+            .document-date.document-cell
+              = @document.created_date.strftime('%d.%m.%Y')
+
+= link_to_attachments @document
+- if authorize_for('documents', 'add_attachment')
+  p
+    = link_to l(:label_attachment_new), {}, :onclick => "$('#add_attachment_form').show(); return false;", :id => 'attach_files_link', target: "_blank"
+  = form_tag({ :controller => 'documents', :action => 'add_attachment', :id => @document }, :multipart => true, :id => "add_attachment_form", :style => "display:none;") do
+    .box
+      p= render :partial => 'attachments/form'
+    = submit_tag l(:button_add)
+- html_title @document.title
