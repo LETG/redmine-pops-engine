@@ -1,7 +1,8 @@
 fr:
   field_created_date: Date de création
+  field_ends_date: Date de fin
   field_lab_name: Laboratoire
   field_sponsor: Financeur du programme
   field_tag_list: Tags
-  field_url_to: Lien vers le document
+  field_url_to: URL
   label_participant_plural: Participants
