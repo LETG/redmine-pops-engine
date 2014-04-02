@@ -64,7 +64,9 @@ function searchHal() {
 }
 
 function setSelect(data) {
-  $('#hal_url_list').find('option').remove();
+  // $('#hal_url_list').find('option').remove();
+  $('#hal_url_list').show();
+  $('#hal_url_list').empty();
   $("#hal_url_list").append(new Option('', ''));
   document.getElementById("hal_results").innerHTML= 'La recherche a retournée ' + data.length + ' résultats.';
   for (var i=0; i<data.length; i++) {
