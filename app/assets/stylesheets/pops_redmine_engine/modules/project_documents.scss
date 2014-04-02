@@ -1,0 +1,107 @@
+$primary-color: #2980b9;
+$global-shadow: 0 2px 0 #DDD;
+$second-bg: #f8f8f8;
+$third-bg: #f0f0f0;
+$document-cell-padding: 8px 12px;
+$document-line-margin: 3px;
+
+.project-marge {
+  margin-top: 50px;
+}
+
+.project-documents input[type="radio"] {
+  margin: 0px;
+}
+.project-documents-radios {
+  margin-bottom: 15px;
+}
+
+.project-documents {
+  .project-documents-title {
+    background-color: $primary-color;
+    font-size: 18px;
+    color: #FFF;
+    padding: 12px 14px;
+    @include box-shadow($global-shadow);
+    margin-bottom: $document-line-margin;
+  }
+  .project-documents-list {
+    margin-bottom: 50px;
+    ul {
+      margin: 0;
+      li.document {
+        background-color: $second-bg;
+        display: table;
+        width: 100%;
+        @include box-shadow($global-shadow);
+        margin-bottom: $document-line-margin;
+        .document-cell {
+          padding: $document-cell-padding;
+          display: table-cell;
+          vertical-align: middle;
+        }
+        .document-files {
+          background-color: $third-bg;
+          border-right: 1px solid #e5e5e5;
+          width: 60px;
+          .document-file {
+            float: left;
+            font-size: 16px;
+            color: #222;
+            margin-bottom: 3px;
+            &:hover {
+              color: $primary-color;
+            }
+            &:nth-child(odd) {
+              margin-right: 3px;
+            }
+          }
+        }
+        .document-infos {
+          .document-info-header {
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 16px;
+            margin-bottom: 4px;
+            .document-info-title {
+              height: 17px;
+              float: left;
+              margin-right: 14px;
+              color: #222;
+              &:hover {
+                color: $primary-color;
+              }
+            }
+            .document-info-tags {
+              float: left;
+              .document-info-tag {
+                background-color: #666666;
+                @include border-radius(3px);
+                margin-right: 4px;
+                color: #FFF;
+                font-size: 11px;
+                padding: 0 4px;
+                float: left;
+                &:last-child {
+                  margin-right: 0;
+                }
+                &:hover {
+                  background-color: $primary-color;
+                }
+              }
+            }
+          }
+          .document-info-resume {
+            font-size: 11px;
+            color: #666;
+          }
+        }
+        .document-date {
+          font-size: 12px;
+          width: 100px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

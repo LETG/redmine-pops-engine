@@ -22,6 +22,31 @@ $(document).ready(function() {
         });
     }
   }
+
+  jQuery('input[name=switch]:radio').click(function(){
+      var v = jQuery(this).val();
+      if(v == "radio_file") {
+        $("#file").show();
+        $("#hal").hide();
+        $("#url").hide();
+        $("#document_url_to").val('');
+        $("#url_input_doc").val('');
+      }
+      else if(v == "radio_hal") {
+        $("#file").hide();
+        $("#hal").show();
+        $("#url").hide();
+        $("#document_url_to").val('');
+        $("#url_input_doc").val('');
+      }
+      else if(v == "radio_url") {
+        $("#file").hide();
+        $("#hal").hide();
+        $("#url").show();
+        $("#document_url_to").val('');
+        $("#url_input_doc").val('');
+      }
+  });
 });
 
 function searchHal() {
@@ -50,5 +75,6 @@ function setSelect(data) {
 function setUrlHal(url) {
   if(document.getElementById("document_url_to")) {
     $("#document_url_to").val($("#hal_url_list").val());
+    $("#url_input_doc").val($("#hal_url_list").val());
   }
 }

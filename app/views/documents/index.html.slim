@@ -14,6 +14,7 @@
     = render :partial => 'form', :locals => {:f => f}
     p
       = submit_tag l(:button_create)
+      '
       = link_to l(:button_cancel), "#", :onclick => '$("#add-document").hide(); $(".project-documents").show(); return false;'
 
 .project-marge
@@ -27,7 +28,7 @@
           - @project.documents.where(category_id: c.id).each do |d|
             li.document
               .document-files.document-cell
-                - if d.url_to
+                - unless d.url_to.nil? || d.url_to.blank?
                   = link_to d.url_to, target: "_blank", title: d.url_to do
                     .document-file.icon-file-link
                 - d.attachments.each do |a|
@@ -55,6 +56,6 @@
                       .document-info-tag
                         = t
                 .document-info-resume
-                  = truncate(d.description, length: 100)
+                  = truncate(d.description.html_safe, length: 100)
               .document-date.document-cell
                 = d.created_date.strftime('%d.%m.%Y') if d.created_date

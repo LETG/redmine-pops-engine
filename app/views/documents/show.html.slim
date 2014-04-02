@@ -19,7 +19,7 @@
         ul
           li.document
             .document-files.document-cell
-              - if @document.url_to
+              - unless @document.url_to.nil? || @document.url_to.blank?
                   = link_to @document.url_to, target: "_blank", title: @document.url_to do
                     .document-file.icon-file-link
               - @document.attachments.each do |a|
@@ -48,7 +48,7 @@
                     .document-info-tag
                       = t
               .document-info-resume
-                = @document.description
+                = @document.description.html_safe
             .document-date.document-cell
               = @document.created_date.strftime('%d.%m.%Y')
 

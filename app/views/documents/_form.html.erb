@@ -13,27 +13,39 @@
 
 <%= wikitoolbar_for 'document_description' %>
 
-<div class="box tabular">
-  <%= form_for :hal do |fhal| %>
-    <p>
-      <label for="hal_url"><%=l(:label_hal_url)%></label>
-      <%= fhal.text_field :url %>
-      <input name="search_hal" type="button" value="Rechercher", onclick= "searchHal()" >
-      <span id="hal_results"></span>
-    </p>
-    <p>
-      <label for="hal_url_list"><%=l(:label_hal_url_list)%></label>
-      <%= fhal.select :url_list, {}, {}, {class: "select2", style: 'width: 100%; margin-bottom: 15px;', onchange: "setUrlHal()"} %>
-    </p>
+<div class="project-documents-radios">
+  <% if @document.new_record? %>
+    <input type="radio" name="switch" value="radio_file" checked="true"/> <span style="margin-right: 10px;">Fichiers</span>
   <% end %>
+  <input type="radio" name="switch" value="radio_hal"/> <span style="margin-right: 10px;">HAL</span>
+  <input type="radio" name="switch" value="radio_url"/> <span style="margin-right: 10px;">URL</span>
 </div>
 
-<div class="box tabular">
+<div class="box tabular" style="display:none" id="hal">
+  <p>
+    <%= link_to "http://hal.archives-ouvertes.fr/", target: "_blank" do %>
+      <%= image_tag("hal.jpeg") %>
+    <% end %>
+  </p>
+  <p>
+    <label for="hal_url"><%=l(:label_hal_url)%></label>
+    <input id="hal_url" name="hal[url]" size="30" type="text">
+    <input name="search_hal" type="button" value="Rechercher", onclick= "searchHal()" >
+  </p>
+  <p><span id="hal_results"></span></p>
+  <p>
+    <label for="hal_url_list"><%=l(:label_hal_url_list)%></label>
+    <select id="hal_url_list" name="hal[url_list]" onchange="setUrlHal()" style="width: 100%; margin-bottom: 15px;" class="select2"></select>
+  </p>
   <p><%= f.text_field :url_to %></p>
 </div>
 
+<div class="box tabular" style="display:none" id="url">
+  <p><%= f.text_field :url_to, id: "url_input_doc" %></p>
+</div>
+
 <% if @document.new_record? %>
-<div class="box tabular">
+<div class="box tabular" id="file">
 <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
 </div>
 <% end %>
