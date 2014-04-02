@@ -4,7 +4,6 @@
 <p><%= f.select :category_id, DocumentCategory.active.collect {|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %></p>
 <p><%= f.text_field :title, :required => true, :size => 60 %></p>
 <p><%= f.text_field :created_date, :required => true, :class => "datepicker", :value => Date.today.strftime("%d/%m/%Y") %></p>
-<p><%= f.text_field :ends_date, :required => true, :class => "datepicker", :value => Date.today.strftime("%d/%m/%Y") %></p>
 <p><%= f.select :tag_list, ActsAsTaggableOn::Tag.all.collect {|c| [c.name, c.name]} ,{}, {multiple: true, :class => 'select2', :style => 'width:100%;' } %></p>
 
 
@@ -14,12 +13,27 @@
 
 <%= wikitoolbar_for 'document_description' %>
 
+<div class="box tabular">
+  <%= form_for :hal do |fhal| %>
+    <p>
+      <label for="hal_url"><%=l(:label_hal_url)%></label>
+      <%= fhal.text_field :url %>
+      <input name="search_hal" type="button" value="Rechercher", onclick= "searchHal()" >
+      <span id="hal_results"></span>
+    </p>
+    <p>
+      <label for="hal_url_list"><%=l(:label_hal_url_list)%></label>
+      <%= fhal.select :url_list, {}, {}, {class: "select2", style: 'width: 100%; margin-bottom: 15px;', onchange: "setUrlHal()"} %>
+    </p>
+  <% end %>
+</div>
+
+<div class="box tabular">
+  <p><%= f.text_field :url_to %></p>
+</div>
+
 <% if @document.new_record? %>
 <div class="box tabular">
 <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
 </div>
 <% end %>
-
-<div class="box tabular">
-  <p><%= f.text_field :url_to %></p>
-</div>

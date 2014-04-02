@@ -1,8 +1,11 @@
 fr:
   field_created_date: Date de création
+  field_starts_date: Date de début
   field_ends_date: Date de fin
   field_lab_name: Laboratoire
   field_sponsor: Financeur du programme
   field_tag_list: Tags
   field_url_to: URL
   label_participant_plural: Participants
+  label_hal_url: Recherche sur HAL
+  label_hal_url_list: Liste des articles liés à la recherche
