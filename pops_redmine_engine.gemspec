@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "slim"
   s.add_dependency "timelineJS-rails", '~> 1.1.5'
   s.add_dependency "compass-rails"
+  s.add_dependency 'savon', '~> 2.0'
   # s.add_dependency "awesome_nested_set"
 
 end
