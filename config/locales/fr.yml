@@ -4,6 +4,7 @@ fr:
   field_ends_date: Date de fin
   field_lab_name: Laboratoire
   field_sponsor: Financeur du programme
+  field_old_password: Ancient mot de passe
   field_tag_list: Types
   field_url_to: URL
   label_participant_plural: Participants

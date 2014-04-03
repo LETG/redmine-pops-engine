@@ -3,20 +3,13 @@
 <div class="box tabular">
 <p><%= f.select :category_id, DocumentCategory.active.collect {|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %></p>
 <p><%= f.select :tag_list, ActsAsTaggableOn::Tag.all.collect {|c| [c.name, c.name]} ,{}, {multiple: true, :class => 'select2', :style => 'width:100%; margin-bottom: 15px;' } %></p>
-<p><%= f.text_field :title, :required => true, :size => 60 %></p>
-<p><%= f.text_field :created_date, :required => true, :class => "datepicker", :value => Date.today.strftime("%d/%m/%Y") %></p>
-
-<p><%= f.text_area :description, :cols => 60, :rows => 15, :class => 'wiki-edit', :style => 'height: 200px;' %></p>
-
 </div>
-
-<%= wikitoolbar_for 'document_description' %>
 
 <div class="project-documents-radios">
   <% if @document.new_record? %>
     <input type="radio" name="switch" value="radio_file" checked="true"/> <span style="margin-right: 10px;">Fichiers</span>
   <% end %>
-  <input type="radio" name="switch" value="radio_hal" checked="<%= @document.new_record? ? false : true %>"/> <span style="margin-right: 10px;">HAL</span>
+  <input type="radio" name="switch" value="radio_hal" <%= @document.new_record? ? checked="false" : checked="true" %>/> <span style="margin-right: 10px;">HAL</span>
   <input type="radio" name="switch" value="radio_url"/> <span style="margin-right: 10px;">URL</span>
 </div>
 
@@ -47,4 +40,12 @@
 <div class="box tabular" id="file">
 <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
 </div>
+
+<div class="box tabular">
+  <p><%= f.text_field :title, :required => true, :size => 60 %></p>
+  <p><%= f.text_field :created_date, :required => true, :class => "datepicker", :value => @document.created_date ? @document.created_date.strftime("%d/%m/%Y") : Date.today.strftime("%d/%m/%Y") %></p>
+  <p><%= f.text_area :description, :cols => 60, :rows => 15, :style => 'height: 150px;' %></p>
+</div
 <% end %>
+
+
