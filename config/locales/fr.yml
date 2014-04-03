@@ -7,6 +7,7 @@ fr:
   field_old_password: Ancient mot de passe
   field_tag_list: Types
   field_url_to: URL
+  label_tag_list: Type
   label_participant_plural: Participants
-  label_hal_url: Recherche sur HAL
+  label_hal_url: Recherche sur HAL (Sur le titre de 6 caractères minimum)
   label_hal_url_list: Liste des articles liés à la recherche

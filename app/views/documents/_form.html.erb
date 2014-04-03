@@ -1,15 +1,23 @@
 <%= error_messages_for @document %>
 
 <div class="box tabular">
-<p><%= f.select :category_id, DocumentCategory.active.collect {|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %></p>
-<p><%= f.select :tag_list, ActsAsTaggableOn::Tag.all.collect {|c| [c.name, c.name]} ,{}, {multiple: true, :class => 'select2', :style => 'width:100%; margin-bottom: 15px;' } %></p>
+<p><%= f.select :category_id, DocumentCategory.active.collect{|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %></p>
+<!-- <p><%= f.select :tag_list, ActsAsTaggableOn::Tag.all.collect {|c| [c.name, c.name]} ,{}, {multiple: true, :class => 'select2', :style => 'width:100%; margin-bottom: 15px;' } %></p> -->
+
+<p>
+  <%= f.hidden_field :tag_list %>
+  <label style="margin-top:5px;"><%=l(:label_tag_list)%></label>
+  <% ActsAsTaggableOn::Tag.all.each do |t| %>
+    <input type="radio" name="switch2" value="<%= t.name %>" style="margin-top:10px;"/><span style="margin-right:10px; margin-left:5px; font-size:16px;"><%= t.name %></span>
+  <% end %>
+</p>
 </div>
 
 <div class="project-documents-radios">
   <% if @document.new_record? %>
     <input type="radio" name="switch" value="radio_file" checked="true"/> <span style="margin-right: 10px;">Fichiers</span>
   <% end %>
-  <input type="radio" name="switch" value="radio_hal" <%= @document.new_record? ? checked="false" : checked="true" %>/> <span style="margin-right: 10px;">HAL</span>
+  <input type="radio" name="switch" value="radio_hal" <%= @document.new_record? ? '' : 'checked="true"' %>/> <span style="margin-right: 10px;">HAL</span>
   <input type="radio" name="switch" value="radio_url"/> <span style="margin-right: 10px;">URL</span>
 </div>
 
