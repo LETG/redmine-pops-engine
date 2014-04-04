@@ -8,6 +8,13 @@
   .timeline-tooltip-inner {
     display: none;
   }
+  .vco-timeline .vco-navigation .timenav .content .marker .line .event-line {
+    background: #0088cc;
+    filter: alpha(opacity=75);
+    -khtml-opacity: 0.75;
+    -moz-opacity: 0.75;
+    opacity: 0.75;
+  }
 }
 
 .storyjs-embed {

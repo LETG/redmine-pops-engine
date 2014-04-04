@@ -40,7 +40,7 @@
   </ul>
 
   <% if User.current.allowed_to?(:view_issues, @project) %>
-  <div class="issues box">
+  <div class="issues box project-box">
     <h3><%=l(:label_issue_tracking)%></h3>
     <ul>
     <% for tracker in @trackers %>
@@ -68,7 +68,7 @@
   <%= render :partial => 'members_box' %>
 
   <% if @news.any? && authorize_for('news', 'index') %>
-  <div class="news box">
+  <div class="news box project-box">
     <h3><%=l(:label_news_latest)%></h3>
     <%= render :partial => 'news/news', :collection => @news %>
     <p><%= link_to l(:label_news_view_all), project_news_index_path(@project) %></p>

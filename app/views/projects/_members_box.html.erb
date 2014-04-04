@@ -1,5 +1,5 @@
 <% if @users_by_role.any? %>
-<div class="members box">
+<div class="members box project-box">
   <h3><%=l(:label_participant_plural)%></h3>
   <p><% @users_by_role.keys.sort.each do |role| %>
   <%= role.name.pluralize %>: <%= @users_by_role[role].sort.collect{|u| link_to_user u}.join(", ").html_safe %><br />
