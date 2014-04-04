@@ -56,6 +56,7 @@ $(document).ready(function() {
       $radios.filter('[value="'+tag+'"]').prop('checked', true);
       if($radios.is(':checked') === false) {
         $radios.first().prop('checked', true);
+        $("#document_tag_list").val($radios.first().val());
       }
     }
 

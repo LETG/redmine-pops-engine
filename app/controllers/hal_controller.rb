@@ -1,5 +1,5 @@
 class HalController < ApplicationController
-  def searchHal
+  def search_hal
 
     client = Savon.client(wsdl: "http://hal.archives-ouvertes.fr/ws/search.php?wsdl")
     articles = []
@@ -16,9 +16,13 @@ class HalController < ApplicationController
     if response && response.success?
       @response = response
       # list of article
-
-      @response.body[:exist_on_hal_response][:exist_on_hal_result][:article_struct].each do |a|
-        articles.push({title: a[:title], url: a[:url], version: a[:version], identifiant: a[:identifiant]})
+      article_structs = @response.body[:exist_on_hal_response][:exist_on_hal_result][:article_struct]
+      if article_structs.kind_of?(Array)
+        article_structs.each do |a|
+          articles.push({title: a[:title], url: a[:url], version: a[:version], identifiant: a[:identifiant]})
+        end
+      else
+        articles.push({title: article_structs[:title], url: article_structs[:url], version: article_structs[:version], identifiant: article_structs[:identifiant]})
       end
     end
 
@@ -27,7 +31,7 @@ class HalController < ApplicationController
     end
   end
 
-  def searchArticleOnHal
+  def search_article_on_hal
     client = Savon.client(wsdl: "http://hal.archives-ouvertes.fr/ws/search.php?wsdl")
     identifiant = params[:identifiant]
     version = params[:version]
@@ -40,21 +44,31 @@ class HalController < ApplicationController
     if response && response.success?
       msg = {}
       resume = ""
-      description = ""
+      description = {}
 
       response.body[:get_article_metadata_response][:get_article_metadata_result][:meta_simple][:data_struct].each do |data|
         msg[:title] = data[:meta_value] if data[:meta_name] == "title"
         msg[:datepub] = data[:meta_value] if data[:meta_name] == "datepub"
-        description << data[:meta_value] if data[:meta_name] == "abstract"
+
+        description[:a] = data[:meta_value] if data[:meta_name] == "journal"
+        description[:b] = " " + data[:meta_value] if data[:meta_name] == "volume"
+        description[:c] = ", " + data[:meta_value] if data[:meta_name] == "issue"
+        description[:d] = " (" + data[:meta_value] + ")" if data[:meta_name] == "datepub"
+        description[:e] = " " + data[:meta_value] if data[:meta_name] == "page"
       end
 
-      response.body[:get_article_metadata_response][:get_article_metadata_result][:meta_aut_lab][:authors][:author_struct].each_with_index do |author,index|
-        resume << author[:first_name] + " " + author[:last_name]
-        resume << " , " if index != response.body[:get_article_metadata_response][:get_article_metadata_result][:meta_aut_lab][:authors][:author_struct].length
+      author_structs = response.body[:get_article_metadata_response][:get_article_metadata_result][:meta_aut_lab][:authors][:author_struct]
+
+      if author_structs.kind_of?(Array)
+        author_structs.each_with_index do |author,index|
+          resume << author[:first_name] + " " + author[:last_name]
+          resume << " , " if index != response.body[:get_article_metadata_response][:get_article_metadata_result][:meta_aut_lab][:authors][:author_struct].length
+        end
+      else
+        resume << author_structs[:first_name] + " " + author_structs[:last_name]
       end
 
-      resume = resume[0..-4]
-      msg[:description] = description
+      resume = resume[0..-4]      msg[:description] = description.sort.collect { |a,b| [b] }.flatten.join(" ")
       msg[:resume] = resume
 
       respond_to do |format|

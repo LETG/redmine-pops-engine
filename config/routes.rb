@@ -1,7 +1,7 @@
 PopsRedmineEngine::Engine.routes.draw do
   RedmineApp::Application.routes.draw do
-    get 'searchHal', to: 'hal#searchHal'
-    get 'searchArticleOnHal', to: 'hal#searchArticleOnHal'
+    get 'searchHal', to: 'hal#search_hal'
+    get 'searchArticleOnHal', to: 'hal#search_article_on_hal'
     resources :projects do
       member do
         get 'timeline'
