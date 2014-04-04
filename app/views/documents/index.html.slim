@@ -19,43 +19,42 @@
 
 .project-marge
 .project-documents
-  - DocumentCategory.all.each do |c|
-    - if @project.documents.where(category_id: c.id).any?
-      .project-documents-title
-        = c.name
-      .project-documents-list
-        ul
-          - @project.documents.where(category_id: c.id).each do |d|
-            li.document
-              .document-files.document-cell
-                - unless d.url_to.nil? || d.url_to.blank?
-                  = link_to d.url_to, target: "_blank", title: d.url_to do
-                    .document-file.icon-file-link
-                - d.attachments.each do |a|
-                  = link_to a, target: "_blank", title: a.filename do
-                    - ext = File.extname(a.filename)
-                    - if imageTypes.include?(ext)
-                      .document-file.icon-file-image
-                    - elsif wordTypes.include?(ext)
-                      .document-file.icon-file-word
-                    - elsif xlsTypes.include?(ext)
-                      .document-file.icon-file-excel
-                    - elsif pdfTypes.include?(ext)
-                      .document-file.icon-file-pdf
-                    - elsif pptTypes.include?(ext)
-                      .document-file.icon-file-powerpoint
-                    - elsif zipTypes.include?(ext)
-                      .document-file.icon-file-zip
-                    - else
-                      .document-file.icon-file-default
-              .document-infos.document-cell
-                .document-info-header
-                  = link_to d.title, d, class: "document-info-title"
-                  .document-info-tags
-                    - d.tag_list.each do |t|
-                      .document-info-tag
-                        = t
-                .document-info-resume
-                  = truncate(d.description.html_safe, length: 100)
-              .document-date.document-cell
-                = d.created_date.strftime('%d.%m.%Y') if d.created_date
+  - @project.documents.includes(:category).order("#{DocumentCategory.table_name}.name, created_date DESC").group_by(&:category).each do |category, docs|
+    .project-documents-title
+      = category.name
+    .project-documents-list
+      ul
+        - docs.each do |d|
+          li.document
+            .document-files.document-cell
+              - unless d.url_to.nil? || d.url_to.blank?
+                = link_to d.url_to, target: "_blank", title: d.url_to do
+                  .document-file.icon-file-link
+              - d.attachments.each do |a|
+                = link_to a, target: "_blank", title: a.filename do
+                  - ext = File.extname(a.filename)
+                  - if imageTypes.include?(ext)
+                    .document-file.icon-file-image
+                  - elsif wordTypes.include?(ext)
+                    .document-file.icon-file-word
+                  - elsif xlsTypes.include?(ext)
+                    .document-file.icon-file-excel
+                  - elsif pdfTypes.include?(ext)
+                    .document-file.icon-file-pdf
+                  - elsif pptTypes.include?(ext)
+                    .document-file.icon-file-powerpoint
+                  - elsif zipTypes.include?(ext)
+                    .document-file.icon-file-zip
+                  - else
+                    .document-file.icon-file-default
+            .document-infos.document-cell
+              .document-info-header
+                = link_to d.title, d, class: "document-info-title"
+                .document-info-tags
+                  - d.tag_list.each do |t|
+                    .document-info-tag
+                      = t
+              .document-info-resume
+                = truncate(d.description.html_safe, length: 100)
+            .document-date.document-cell
+              = d.created_date.strftime('%d.%m.%Y') if d.created_date

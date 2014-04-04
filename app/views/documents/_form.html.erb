@@ -48,12 +48,13 @@
 <div class="box tabular" id="file">
 <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
 </div>
+<% end %>
 
 <div class="box tabular">
   <p><%= f.text_field :title, :required => true, :size => 60 %></p>
   <p><%= f.text_field :created_date, :required => true, :class => "datepicker", :value => @document.created_date ? @document.created_date.strftime("%d/%m/%Y") : Date.today.strftime("%d/%m/%Y") %></p>
   <p><%= f.text_area :description, :cols => 60, :rows => 15, :style => 'height: 150px;' %></p>
-</div
-<% end %>
+</div>
+
 
 
