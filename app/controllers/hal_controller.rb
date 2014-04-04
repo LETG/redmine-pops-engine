@@ -53,6 +53,7 @@ class HalController < ApplicationController
         resume << " , " if index != response.body[:get_article_metadata_response][:get_article_metadata_result][:meta_aut_lab][:authors][:author_struct].length
       end
 
+      resume = resume[0..-4]
       msg[:description] = description
       msg[:resume] = resume
 
