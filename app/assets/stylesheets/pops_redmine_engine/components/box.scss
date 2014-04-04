@@ -2,6 +2,18 @@
   .project-box {
     padding: 0 0 10px 0;
     margin-bottom: 20px;
+    &.members {
+      h3 {
+        background: url(/assets/icons/users.png) 10px 42% no-repeat #2980b9;
+        padding-left: 34px;
+      }
+    }
+    &.members {
+      h3 {
+        background: url(/assets/icons/newspaper.png) 10px 50% no-repeat #2980b9;
+        padding-left: 34px;
+      }
+    }
     h3 {
       background: none;
       margin-top: 0;
