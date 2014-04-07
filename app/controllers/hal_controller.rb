@@ -68,7 +68,8 @@ class HalController < ApplicationController
         resume << author_structs[:first_name] + " " + author_structs[:last_name]
       end
 
-      resume = resume[0..-4]      msg[:description] = description.sort.collect { |a,b| [b] }.flatten.join(" ")
+      resume = resume[0..-4]
+      msg[:description] = description.sort.collect { |a,b| [b] }.flatten.join(" ")
       msg[:resume] = resume
 
       respond_to do |format|
