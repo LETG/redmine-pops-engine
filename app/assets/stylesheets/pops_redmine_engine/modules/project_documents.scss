@@ -14,6 +14,9 @@ $document-line-margin: 3px;
 }
 .project-documents-radios {
   margin-bottom: 15px;
+  input[type="radio"] {
+    margin-top: 10px;
+  }
 }
 
 .project-documents {
@@ -64,7 +67,6 @@ $document-line-margin: 3px;
             line-height: 16px;
             margin-bottom: 4px;
             .document-info-title {
-              height: 17px;
               float: left;
               margin-right: 14px;
               color: #222;

@@ -53,7 +53,8 @@ class HalController < ApplicationController
         description[:a] = data[:meta_value] if data[:meta_name] == "journal"
         description[:b] = " " + data[:meta_value] if data[:meta_name] == "volume"
         description[:c] = ", " + data[:meta_value] if data[:meta_name] == "issue"
-        description[:d] = " (" + data[:meta_value] + ")" if data[:meta_name] == "datepub"
+        # raise data.inspect if data[:meta_name] == "datepub"
+        description[:d] = " (" + data[:meta_value].to_s + ")" if data[:meta_name] == "datepub"
         description[:e] = " " + data[:meta_value] if data[:meta_name] == "page"
       end
 

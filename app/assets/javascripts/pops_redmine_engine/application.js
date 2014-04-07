@@ -90,7 +90,13 @@ function searchArticleOnHal() {
         url: '/searchArticleOnHal?identifiant=' + $('#hal_url_list').find(":selected").attr('identifiant') + '&version=' + $('#hal_url_list').find(":selected").attr('version') ,
         success: function (data) {
           $("#document_title").val(data.title);
-          $("#document_created_date").val('01/01/'+data.datepub);
+          if(data.datepub.length < 5) {
+            console.log(data.datepub.length);
+            $("#document_created_date").val('01/01/'+data.datepub);
+          }
+          else {
+            $("#document_created_date").val(data.datepub);
+          }
           $("#document_description").val(data.resume + "\n" + data.description);
         }
       });
