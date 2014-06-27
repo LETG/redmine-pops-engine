@@ -2,6 +2,8 @@
 
 <div class="box tabular">
 <p><%= f.select :category_id, DocumentCategory.active.collect{|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %></p>
+
+<p><%= f.check_box :visible_in_timeline, {checked: @document.visible_in_timeline} %></p>
 <!-- <p><%= f.select :tag_list, ActsAsTaggableOn::Tag.all.collect {|c| [c.name, c.name]} ,{}, {multiple: true, :class => 'select2', :style => 'width:100%; margin-bottom: 15px;' } %></p> -->
 
 <p>

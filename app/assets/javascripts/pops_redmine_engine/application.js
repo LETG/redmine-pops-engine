@@ -1,5 +1,8 @@
 //= require ./vendor/vendor
 
+VMM.Util.untagify = function(text) { return text; }
+
+
 $(document).ready(function() {
 
   if(document.getElementById("project_id")) {
