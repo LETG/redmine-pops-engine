@@ -27,30 +27,40 @@ $(document).ready(function() {
     }
   }
 
-  jQuery('input[name=switch]:radio').click(function(){
-      var v = jQuery(this).val();
-      if(v == "radio_file") {
-        $("#file").show();
-        $("#hal").hide();
-        $("#url").hide();
-        $("#document_url_to").val('');
-        $("#url_input_doc").val('');
-      }
-      else if(v == "radio_hal") {
-        $("#file").hide();
-        $("#hal").show();
-        $("#url").hide();
-        $("#document_url_to").val('');
-        $("#url_input_doc").val('');
-      }
-      else if(v == "radio_url") {
-        $("#file").hide();
-        $("#hal").hide();
-        $("#url").show();
-        $("#document_url_to").val('');
-        $("#url_input_doc").val('');
-      }
-  });
+  // jQuery('input[name=switch]:radio').click(function(){
+  //     var v = jQuery(this).val();
+  //     if(v == "radio_file") {
+  //       $("#file").show();
+  //       $("#hal").hide();
+  //       $("#url").hide();
+  //       $("#document_url_to").val('');
+  //       $("#url_input_doc").val('');
+  //     }
+  //     else if(v == "radio_hal") {
+  //       $("#file").hide();
+  //       $("#hal").show();
+  //       $("#url").hide();
+  //       $("#document_url_to").val('');
+  //       $("#url_input_doc").val('');
+  //     }
+  //     else if(v == "radio_url") {
+  //       $("#file").hide();
+  //       $("#hal").hide();
+  //       $("#url").show();
+  //       $("#document_url_to").val('');
+  //       $("#url_input_doc").val('');
+  //     }
+  // });
+
+
+  $("#document_category_id").select2().on("change", function(e) {
+    if($("#document_category_id").select2('data').text == "Gestion de projet") {
+      $("#document_visible_to_public").attr('checked', false);
+    }
+    else {
+      $("#document_visible_to_public").attr('checked', true);
+    }
+  })
 
   if(document.getElementById("document_tag_list")) {
     var tag = $("#document_tag_list").val();
@@ -69,7 +79,66 @@ $(document).ready(function() {
     });
   }
 
+  setDocumentTitle();
+
+  $('#document_tabs').on('toggled', function (event, tab) {
+    if(tab[0].id == "hal") {
+      setDocumentTitle(tab);
+    }
+    else {
+      $("#document_title").select2('destroy');
+    }
+  });
 });
+
+function setDocumentTitle() {
+  $("#document_title").addClass('select2');
+  $("#document_title").select2({
+      minimumInputLength: 6,
+      placeholder: "Nom d'un article",
+      multiple: false,
+      id: function(hit) {
+        return hit.identifiant;
+      },
+      ajax: {
+          url: '/searchHal',
+          dataType: 'json',
+          type: 'get',
+          data: function (term) {
+              return {
+                  title: term
+              };
+          },
+          results: function (data) {
+              return {results: data};
+          }
+      },
+      formatResult: halFormatResult,
+      formatSelection: halFormatSelection,
+      initSelection: function(element, callback) {
+        var title=$("#document_title").val();
+        if (title!=="") {
+            $.ajax("/searchHal", {
+                type: 'get',
+                data: {
+                    title: title
+                },
+                dataType: "json"
+            }).done(function(data) { callback(data[0]); });
+        }
+      }
+  });
+}
+
+function halFormatResult(item) {
+  return item.title;
+}
+
+function halFormatSelection(item) {
+  searchArticleOnHal(item.identifiant, item.version, item.url)
+  return item.title;
+}
+
 
 function searchHal() {
   if(document.getElementById("hal_url")) {
@@ -85,26 +154,24 @@ function searchHal() {
   }
 }
 
-function searchArticleOnHal() {
-  if(document.getElementById("hal_url")) {
-    if($("#hal_url").val() != "") {
-      $.ajax({
-        type: 'get',
-        url: '/searchArticleOnHal?identifiant=' + $('#hal_url_list').find(":selected").attr('identifiant') + '&version=' + $('#hal_url_list').find(":selected").attr('version') ,
-        success: function (data) {
-          $("#document_title").val(data.title);
-          if(data.datepub.length < 5) {
-            console.log(data.datepub.length);
-            $("#document_created_date").val('01/01/'+data.datepub);
-          }
-          else {
-            $("#document_created_date").val(data.datepub);
-          }
-          $("#document_description").val(data.resume + "\n" + data.description);
-        }
-      });
+function searchArticleOnHal(id, version, url) {
+  $.ajax({
+    type: 'get',
+    url: '/searchArticleOnHal?identifiant=' + id + '&version=' + version,
+    success: function (data) {
+      $("#document_title").val(data.title);
+      if(data.datepub.length < 5) {
+        $("#document_created_date").val('01/01/'+data.datepub);
+      }
+      else {
+        $("#document_created_date").val(data.datepub);
+      }
+      $("#document_description").val(data.resume + "\n" + data.description);
+      $("#document_url_to").val(url);
+      $("#url_input_doc").val(url);
     }
-  }
+  });
+
 }
 
 function setSelect(data) {

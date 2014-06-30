@@ -1,61 +1,73 @@
 <%= error_messages_for @document %>
 
 <div class="box tabular">
-<p><%= f.select :category_id, DocumentCategory.active.collect{|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %></p>
-
-<p><%= f.check_box :visible_in_timeline, {checked: @document.visible_in_timeline} %></p>
-<!-- <p><%= f.select :tag_list, ActsAsTaggableOn::Tag.all.collect {|c| [c.name, c.name]} ,{}, {multiple: true, :class => 'select2', :style => 'width:100%; margin-bottom: 15px;' } %></p> -->
-
-<p>
+  <p><%= f.select :category_id, DocumentCategory.active.collect{|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %>
+  </p>
   <%= f.hidden_field :tag_list %>
-  <label style="margin-top:5px;"><%=l(:label_tag_list)%></label>
-  <% ActsAsTaggableOn::Tag.all.each do |t| %>
-    <input type="radio" name="switch2" value="<%= t.name %>" style="margin-top:10px;"/><span style="margin-right:10px; margin-left:5px; font-size:16px;"><%= t.name %></span>
+  <% ActsAsTaggableOn::Tag.all.each_with_index do |t, index| %>
+    <p>
+      <label for="switch<%= index %>"><%= t.name %></label>
+      <input type="radio" id="switch<%= index %>" name="switch" value="<%= t.name %>"/>
+    </p>
   <% end %>
-</p>
+  <br/>
+  <p><%= f.check_box :visible_in_timeline, {checked: @document.visible_in_timeline} %></p>
+  <p><%= f.check_box :visible_to_public, {checked: @document.visible_to_public} %></p>
 </div>
 
-<div class="project-documents-radios">
-  <% if @document.new_record? %>
-    <input type="radio" name="switch" value="radio_file" checked="true"/> <span style="margin-right: 10px;">Fichiers</span>
-  <% end %>
-  <input type="radio" name="switch" value="radio_hal" <%= @document.new_record? ? '' : 'checked="true"' %>/> <span style="margin-right: 10px;">HAL</span>
-  <input type="radio" name="switch" value="radio_url"/> <span style="margin-right: 10px;">URL</span>
-</div>
+<dl class="tabs" id="document_tabs" data-tab>
+  <dd class="active"><a href="#hal">HAL</a></dd>
+  <dd><a href="#url">URL</a></dd>
+  <dd><a href="#file">Fichiers</a></dd>
+</dl>
 
-<div class="box tabular" style="<%= @document.new_record? ? 'display:none' : '' %>" id="hal">
-  <p>
-    <%= link_to "http://hal.archives-ouvertes.fr/", target: "_blank" do %>
-      <%= image_tag("hal.jpeg") %>
+<div class="box tabs-content">
+
+  <div class="content active" id="hal">
+    <div class=" tabular">
+      <p>
+        <%= link_to "http://hal.archives-ouvertes.fr/", target: "_blank" do %>
+          <%= image_tag("hal.jpeg") %>
+        <% end %>
+      </p>
+      <!-- <p>
+        <label for="hal_url"><%=l(:label_hal_url)%></label>
+        <input id="hal_url" name="hal[url]" size="30" type="text">
+        <input name="search_hal" type="button" value="Rechercher", onclick= "searchHal()" >
+      </p>
+      <p><span id="hal_results"></span></p>
+      <p>
+        <label for="hal_url_list"><%=l(:label_hal_url_list)%></label>
+        <select id="hal_url_list" name="hal[url_list]" onchange="setUrlHal()" style="width: 100%; margin-bottom: 15px;" class="select2" style="display:none" onblur= 'ignore'></select>
+      </p> -->
+      <p><%= f.text_field :url_to %></p>
+    </div>
+  </div>
+
+  <div class="content" id="url">
+    <div class=" tabular">
+      <p><%= f.text_field :url_to, id: "url_input_doc" %></p>
+    </div>
+  </div>
+
+  <div class="content" id="file">
+    <% if @document.new_record? %>
+      <div class=" tabular">
+      <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
+      </div>
+    <% else %>
+      <div class=" tabular">
+        <%= link_to_attachments @document %>
+        <div class=" tabular">
+          <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
+        </div>
+      </div>
     <% end %>
-  </p>
-  <p>
-    <label for="hal_url"><%=l(:label_hal_url)%></label>
-    <input id="hal_url" name="hal[url]" size="30" type="text">
-    <input name="search_hal" type="button" value="Rechercher", onclick= "searchHal()" >
-  </p>
-  <p><span id="hal_results"></span></p>
-  <p>
-    <label for="hal_url_list"><%=l(:label_hal_url_list)%></label>
-    <select id="hal_url_list" name="hal[url_list]" onchange="setUrlHal()" style="width: 100%; margin-bottom: 15px;" class="select2" style="display:none" onblur= 'ignore'></select>
-  </p>
-  <p><%= f.text_field :url_to %></p>
-</div>
+  </div>
 
-<div class="box tabular" style="display:none" id="url">
-  <p><%= f.text_field :url_to, id: "url_input_doc" %></p>
-</div>
+  <%= render :partial => 'document_fields', :locals => {:f => f} %>
 
-<% if @document.new_record? %>
-<div class="box tabular" id="file">
-<p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
-</div>
-<% end %>
 
-<div class="box tabular">
-  <p><%= f.text_field :title, :required => true, :size => 60 %></p>
-  <p><%= f.text_field :created_date, :required => true, :class => "datepicker", :value => @document.created_date ? @document.created_date.strftime("%d/%m/%Y") : Date.today.strftime("%d/%m/%Y") %></p>
-  <p><%= f.text_area :description, :cols => 60, :rows => 15, :style => 'height: 150px;' %></p>
 </div>
 
 
