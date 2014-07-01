@@ -8,6 +8,9 @@ fr:
   field_tag_list: Types
   field_url_to: URL
   field_visible_to_public: Visible au public
+  label_add_lab: Ajouter un laboratoire/partenaire
+  label_delete_lab: Supprimer le laboratoire/partenaire
+  label_labs: Laboratoires/Partneraires
   label_tag_list: Type
   label_participant_plural: Participants
   label_hal_url: Recherche sur HAL (Sur le titre de 6 caractères minimum)
