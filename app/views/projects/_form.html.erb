@@ -2,13 +2,17 @@
 
 <div class="box tabular">
 <!--[form:project]-->
-<p><%= f.text_field :name, :required => true, :size => 60 %></p>
+<p><%= f.text_field :name, :label => "Titre court", :required => true, :size => 60 %></p>
 
-<p><%= f.text_area :description, :rows => 8, :class => 'wiki-edit' %></p>
-<p><%= f.text_field :identifier, :required => true, :size => 60, :disabled => @project.identifier_frozen?, :maxlength => Project::IDENTIFIER_MAX_LENGTH %>
-<% unless @project.identifier_frozen? %>
-  <em class="info"><%= l(:text_length_between, :min => 1, :max => Project::IDENTIFIER_MAX_LENGTH) %> <%= l(:text_project_identifier_info).html_safe %></em>
-<% end %></p>
+<p><%= f.text_area :description, :label => "Titre complet", :rows => 8 %></p>
+
+<p><%= f.text_field :starts_date, required: true, class: "datepicker", value: @project.starts_date ? @project.starts_date.strftime("%d/%m/%Y") : Date.today.strftime("%d/%m/%Y") %></p>
+<p><%= f.text_field :ends_date, required: true, class: "datepicker", value: @project.ends_date ? @project.ends_date.strftime("%d/%m/%Y") : Date.today.strftime("%d/%m/%Y")%></p>
+
+<p><%= f.text_field :homepage, :size => 60 %></p>
+
+<p><%= f.hidden_field :identifier, :required => true, :size => 60, :disabled => @project.identifier_frozen?, :maxlength => Project::IDENTIFIER_MAX_LENGTH %>
+</p>
 
 <!-- <p><%= f.text_field :lab_name %></p> -->
 <p>
@@ -23,18 +27,17 @@
   </div>
 </p>
 
-<p><%= f.text_field :homepage, :size => 60 %></p>
-<p><%= f.check_box :is_public %></p>
+<p><%= f.check_box :is_public, :label => "Project public ?" %></p>
 
 <% unless @project.allowed_parents.compact.empty? %>
-    <p><%= label(:project, :parent_id, l(:field_parent)) %><%= parent_project_select_tag(@project) %></p>
+    <p><%= label(:project, :parent_id, "Projet parent") %><%= parent_project_select_tag(@project) %></p>
 <% end %>
 
 <% if @project.safe_attribute? 'inherit_members' %>
-<p><%= f.check_box :inherit_members %></p>
+<p><%= f.check_box :inherit_members, :label => "Importer les membres du projet parent" %></p>
 <% end %>
 
-<%= wikitoolbar_for 'project_description' %>
+<!-- <%= wikitoolbar_for 'project_description' %> -->
 
 <% @project.custom_field_values.each do |value| %>
   <p><%= custom_field_tag_with_label :project, value %></p>

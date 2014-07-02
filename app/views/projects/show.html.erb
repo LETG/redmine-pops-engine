@@ -12,7 +12,7 @@
 </div>
 
 <div id="time_line" title=""></div>
-<h2><%= @project.name %></h2>
+<h2><%= @project.description.blank? ? @project.name : @project.description %></h2>
 
 <% unless @project.active? %>
   <p class="warning"><span class="icon icon-lock"><%= l(:text_project_closed) %></span></p>
