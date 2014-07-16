@@ -58,3 +58,8 @@
                 = truncate(d.description.html_safe, length: 100)
             .document-date.document-cell
               = d.created_date.strftime('%d.%m.%Y') if d.created_date
+            .document-actions.document-cell
+              - if User.current.membership(@project)
+                = link_to image_tag("pencil.png"), edit_document_path(d)
+              - if User.current.allowed_to?(:delete, @project) || (User.current.membership(@project) && User.current.membership(@project).roles.include?(Role.where(name: "Coordinateur").first))
+                .right = link_to image_tag("cross.png"), document_path(d), method: :delete, confirm: "Supprimer le document ?"
