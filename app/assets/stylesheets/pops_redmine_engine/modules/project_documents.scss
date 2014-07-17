@@ -18,7 +18,12 @@ $document-line-margin: 3px;
     margin-top: 10px;
   }
 }
-
+.project-document-new {
+  margin-bottom: 10px;
+  overflow: hidden;
+  margin-right: 0;
+  float: none;
+}
 .project-documents {
   .project-documents-title {
     background-color: $primary-color;
