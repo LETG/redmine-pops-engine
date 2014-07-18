@@ -79,10 +79,18 @@ $(document).ready(function() {
     });
   }
 
-  setDocumentTitle();
+  // setDocumentTitle();
+  $('#document_title').on('change', function (event, tab) {
+    if($(this).val().length == 0) {
+      $("#document_hal").prop('disabled', false);
+    }
+    else {
+      $("#document_hal").prop('disabled', true);
+    }
+  });
 
-  $('#document_tabs').on('toggled', function (event, tab) {
-    if(tab[0].id == "hal") {
+  $('#document_hal').on('click', function (event, tab) {
+    if($(this).prop('checked')) {
       setDocumentTitle(tab);
     }
     else {
@@ -95,7 +103,8 @@ function setDocumentTitle() {
   $("#document_title").addClass('select2');
   $("#document_title").select2({
       minimumInputLength: 6,
-      placeholder: "Nom d'un article",
+      placeholder: "Rechercher un article par son titre",
+      allowClear: true,
       multiple: false,
       id: function(hit) {
         return hit.identifiant;
@@ -147,6 +156,7 @@ function searchHal() {
         type: 'get',
         url: '/searchHal?title=' + $("#hal_url").val(),
         success: function (data) {
+          console.log(data);
           setSelect(data);
         }
       });
@@ -160,8 +170,10 @@ function searchArticleOnHal(id, version, url) {
     url: '/searchArticleOnHal?identifiant=' + id + '&version=' + version,
     success: function (data) {
       $("#document_title").val(data.title);
-      if(data.datepub.length < 5) {
-        $("#document_created_date").val('01/01/'+data.datepub);
+      if(data.datapub != undefined) {
+        if (data.datepub.length < 5) {
+          $("#document_created_date").val('01/01/'+data.datepub);
+        }
       }
       else {
         $("#document_created_date").val(data.datepub);

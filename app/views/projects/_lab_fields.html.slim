@@ -1,6 +1,6 @@
 .nested-fields
   p
     = f.text_field :name
-    = f.text_field :url
+    = f.text_field :url, label: l(:label_nested_url)
     em.info
       = link_to_remove_association l(:label_delete_lab), f, class: ""

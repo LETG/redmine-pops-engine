@@ -15,57 +15,24 @@
   <p><%= f.check_box :visible_to_public, {checked: @document.visible_to_public} %></p>
 </div>
 
-<dl class="tabs" id="document_tabs" data-tab>
-  <dd class="active"><a href="#hal">HAL</a></dd>
-  <dd><a href="#url">URL</a></dd>
-  <dd><a href="#file">Fichiers</a></dd>
-</dl>
-
-<div class="box tabs-content">
-
-  <div class="content active" id="hal">
-    <div class=" tabular">
-      <p>
-        <%= link_to "http://hal.archives-ouvertes.fr/", target: "_blank" do %>
-          <%= image_tag("hal.jpeg") %>
-        <% end %>
-      </p>
-      <!-- <p>
-        <label for="hal_url"><%=l(:label_hal_url)%></label>
-        <input id="hal_url" name="hal[url]" size="30" type="text">
-        <input name="search_hal" type="button" value="Rechercher", onclick= "searchHal()" >
-      </p>
-      <p><span id="hal_results"></span></p>
-      <p>
-        <label for="hal_url_list"><%=l(:label_hal_url_list)%></label>
-        <select id="hal_url_list" name="hal[url_list]" onchange="setUrlHal()" style="width: 100%; margin-bottom: 15px;" class="select2" style="display:none" onblur= 'ignore'></select>
-      </p> -->
-      <p><%= f.text_field :url_to %></p>
-    </div>
-  </div>
-
-  <div class="content" id="url">
-    <div class=" tabular">
-      <p><%= f.text_field :url_to, id: "url_input_doc" %></p>
-    </div>
-  </div>
-
-  <div class="content" id="file">
-    <% if @document.new_record? %>
-      <div class=" tabular">
-      <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
-      </div>
-    <% else %>
-      <div class=" tabular">
-        <%= link_to_attachments @document %>
-        <div class=" tabular">
-          <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<div class="box tabular">
+  <p><%= f.check_box :hal, {checked: false, disabled: !@document.title.blank? }%></p>
 
   <%= render :partial => 'document_fields', :locals => {:f => f} %>
+
+  <p><%= f.text_field :url_to %></p>
+  <% if @document.new_record? %>
+    <div class=" tabular">
+    <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
+    </div>
+  <% else %>
+    <div class=" tabular">
+      <%= link_to_attachments @document %>
+      <div class=" tabular">
+        <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form', :locals => {:container => @document} %></p>
+      </div>
+    </div>
+  <% end %>
 
 
 </div>

@@ -27,7 +27,7 @@
   </div>
 </p>
 
-<p><%= f.check_box :is_public, :label => "Project public ?" %></p>
+<p><%= f.check_box :is_public, :label => l(:label_project_public) %></p>
 
 <% unless @project.allowed_parents.compact.empty? %>
     <p><%= label(:project, :parent_id, "Projet parent") %><%= parent_project_select_tag(@project) %></p>
