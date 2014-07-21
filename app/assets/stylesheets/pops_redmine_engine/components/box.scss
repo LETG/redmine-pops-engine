@@ -4,13 +4,13 @@
     margin-bottom: 20px;
     &.members {
       h3 {
-        background: url(/assets/icons/users.png) 10px 42% no-repeat #2980b9;
+        background: image_url("icons/users.png") 10px 42% no-repeat #2980b9;
         padding-left: 34px;
       }
     }
     &.news {
       h3 {
-        background: url(/assets/icons/newspaper.png) 10px 50% no-repeat #2980b9;
+        background: image_url("icons/newspaper.png") 10px 50% no-repeat #2980b9;
         padding-left: 34px;
       }
     }

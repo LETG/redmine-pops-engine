@@ -8,7 +8,7 @@ $(document).ready(function() {
   if(document.getElementById("project_id")) {
     $.ajax({
       type: 'get',
-      url: '/projects/'+$("#project_id").attr('value')+'/timeline',
+      url: '/pops/projects/'+$("#project_id").attr('value')+'/timeline',
       success: function (data) {
         createTimeline(data);
       }
@@ -110,7 +110,7 @@ function setDocumentTitle() {
         return hit.identifiant;
       },
       ajax: {
-          url: '/searchHal',
+          url: '/pops/searchHal',
           dataType: 'json',
           type: 'get',
           data: function (term) {
@@ -127,7 +127,7 @@ function setDocumentTitle() {
       initSelection: function(element, callback) {
         var title=$("#document_title").val();
         if (title!=="") {
-            $.ajax("/searchHal", {
+            $.ajax("/pops/searchHal", {
                 type: 'get',
                 data: {
                     title: title
@@ -154,7 +154,7 @@ function searchHal() {
     if($("#hal_url").val() != "") {
       $.ajax({
         type: 'get',
-        url: '/searchHal?title=' + $("#hal_url").val(),
+        url: '/pops/searchHal?title=' + $("#hal_url").val(),
         success: function (data) {
           console.log(data);
           setSelect(data);
@@ -167,7 +167,7 @@ function searchHal() {
 function searchArticleOnHal(id, version, url) {
   $.ajax({
     type: 'get',
-    url: '/searchArticleOnHal?identifiant=' + id + '&version=' + version,
+    url: '/pops/searchArticleOnHal?identifiant=' + id + '&version=' + version,
     success: function (data) {
       $("#document_title").val(data.title);
       if(data.datapub != undefined) {

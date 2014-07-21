@@ -81,6 +81,12 @@
         <%= text_field_tag('email', nil) %>
       </p>
       <p>
+        Nom :
+        <%= text_field_tag('lastname', nil) %>
+	Prénom :
+	<%= text_field_tag('firstname', nil) %>
+      </p>
+      <p>
         <%= l(:label_role_plural) %>:
         <% roles.each do |role| %>
           <label><%= check_box_tag 'membership[role_ids][]', role.id %> <%= role %></label>
