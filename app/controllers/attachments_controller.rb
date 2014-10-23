@@ -11,4 +11,8 @@ class AttachmentsController < ApplicationController
                                       :disposition => (@attachment.image? || (!!(@attachment.filename =~ /\.(pdf)$/i)) ? 'inline' : 'attachment')
     end
   end
+
+  def read_authorize
+    true
+  end
 end

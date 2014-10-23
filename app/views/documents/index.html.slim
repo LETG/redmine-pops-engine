@@ -19,7 +19,7 @@
 
 .project-marge
 .project-documents
-  - @project.documents.includes(:category).order("#{DocumentCategory.table_name}.name, created_date DESC").group_by(&:category).each do |category, docs|
+  - @project.documents.visible.includes(:category).order("#{DocumentCategory.table_name}.name, created_date DESC").group_by(&:category).each do |category, docs|
     .project-documents-title
       = category.name
     .project-documents-list
@@ -49,7 +49,8 @@
                     .document-file.file-icon-default
             .document-infos.document-cell
               .document-info-header
-                = link_to d.title, edit_document_path(d), class: "document-info-title"
+                .document-info-title
+                  = d.title
                 .document-info-tags
                   - d.tag_list.each do |t|
                     .document-info-tag
@@ -59,7 +60,7 @@
             .document-date.document-cell
               = d.created_date.strftime('%d.%m.%Y') if d.created_date
             .document-actions.document-cell
-              - if User.current.membership(@project)
+              - if User.current.admin? || User.current.membership(@project)
                 = link_to image_tag("pencil.png"), edit_document_path(d)
-              - if User.current.allowed_to?(:delete, @project) || (User.current.membership(@project) && User.current.membership(@project).roles.include?(Role.where(name: "Coordinateur").first))
+              - if User.current.admin? || User.current.allowed_to?(:delete, @project) || (User.current.membership(@project) && User.current.membership(@project).roles.include?(Role.where(name: "Coordinateur").first))
                 .right = link_to image_tag("cross.png"), document_path(d), method: :delete, confirm: "Supprimer le document ?"

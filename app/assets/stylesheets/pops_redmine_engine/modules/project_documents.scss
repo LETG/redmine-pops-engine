@@ -75,9 +75,9 @@ $document-line-margin: 3px;
               float: left;
               margin-right: 14px;
               color: #222;
-              &:hover {
-                color: $primary-color;
-              }
+              //&:hover {
+              //  color: $primary-color;
+              //}
             }
             .document-info-tags {
               float: left;

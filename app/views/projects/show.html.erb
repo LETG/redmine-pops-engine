@@ -20,14 +20,9 @@
   <% end %>
 
   <div class="splitcontentleft">
-    <% if @project.description.present? %>
-    <div class="wiki">
-      <%= textilizable @project.description %>
-    </div>
-    <% end %>
     <ul>
     <% unless @project.homepage.blank? %>
-      <li><%=l(:field_homepage)%>: <%= link_to h(@project.homepage), @project.homepage %></li>
+      <li><%=l(:field_homepage)%>: <%= link_to h(@project.homepage), /^http/.match(@project.homepage) ? @project.homepage : "http://#{@project.homepage}", target: "blank_" %></li>
     <% end %>
     <% if @subprojects.any? %>
       <li><%=l(:label_subproject_plural)%>:

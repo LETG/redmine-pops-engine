@@ -8,7 +8,21 @@ fr:
   field_old_password: Ancient mot de passe
   field_tag_list: Types
   field_url_to: URL
+  field_url: Site web laboratoire
   field_visible_to_public: Visible au public
+
+  field_accronym: Accronyme
+  field_objectifs: Objectifs
+  field_resume: Résumé
+  field_methodologies: Méthodologie
+  field_results: Résultats attendus
+  field_perspectives: Perspectives
+  field_comments: Commentaire Général
+  field_url_public: URL publique
+  field_url_project: URL du projet
+  field_support: Soutien
+  field_lab_partner: Laboratoires/Partenaires
+
   label_add_lab: Ajouter un laboratoire/partenaire
   label_delete_lab: Supprimer le laboratoire/partenaire
   label_labs: Laboratoires/Partenaires

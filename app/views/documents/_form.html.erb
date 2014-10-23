@@ -3,11 +3,11 @@
 <div class="box tabular">
   <p><%= f.select :category_id, DocumentCategory.active.collect{|c| [c.name, c.id]}, {}, {class: "select2", :style => 'width: 200px; margin-bottom: 15px;'} %>
   </p>
-  <%= f.hidden_field :tag_list %>
-  <% ActsAsTaggableOn::Tag.all.each_with_index do |t, index| %>
+  <% ActsAsTaggableOn::Tag.order(:name).each_with_index do |t, index| %>
     <p>
-      <label for="switch<%= index %>"><%= t.name %></label>
-      <input type="radio" id="switch<%= index %>" name="switch" value="<%= t.name %>"/>
+      <%= label_tag("document[tag_list]", t.name) %>
+      <%= radio_button_tag("document[tag_list]", t.name, checked = (@document.tags.count == 0 && index == 0) ? true : (@document.tags.include?(ActsAsTaggableOn::Tag.where(name: t.name).first)), options = {}) %>
+    <br/>
     </p>
   <% end %>
   <br/>
