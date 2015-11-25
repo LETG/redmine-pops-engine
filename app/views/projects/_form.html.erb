@@ -86,7 +86,7 @@
 
 <% unless @project.identifier_frozen? %>
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'project_identifier' %>
+    <%= javascript_include_tag 'pops_redmine_engine/project_identifier' %>
   <% end %>
 <% end %>
 
