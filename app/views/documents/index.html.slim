@@ -31,7 +31,7 @@
                 = link_to d.url_to, target: "_blank", title: d.url_to do
                   .document-file.file-icon-link
               - d.attachments.each do |a|
-                = link_to a, target: "_blank", title: a.filename do
+                = link_to a, target: "_blank", title: (a.description.blank? ? a.filename : a.description) do
                   - ext = File.extname(a.filename)
                   - if imageTypes.include?(ext)
                     .document-file.file-icon-image

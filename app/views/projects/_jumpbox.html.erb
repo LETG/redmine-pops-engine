@@ -1,0 +1,8 @@
+<% if !project.nil? %>
+  <select onChange="window.location.href=this.value">
+    <option value="">Aller à ...</option>
+    <optgroup value="<%= project_path(project) %>" label="<%= project %>">
+      <%= project.children.visible.all.collect{|p| content_tag(:option, p, value: project_path(p))}.join(" ").html_safe %>
+    </optgroup>
+  </select>
+<% end %>

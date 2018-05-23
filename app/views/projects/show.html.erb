@@ -1,39 +1,41 @@
 <div class="project-show">
-  <div class="contextual">
-    <% if User.current.allowed_to?(:add_subprojects, @project) && User.current.roles_for_project(@project).include?(Role.find_by_name("Coordinateur")) %>
-      <%= link_to l(:label_subproject_new), new_project_path(:parent_id => @project), :class => 'icon icon-add' %>
-    <% end %>
-    <% if User.current.allowed_to?(:close_project, @project) && User.current.roles_for_project(@project).include?(Role.find_by_name("Coordinateur")) %>
-      <% if @project.active? %>
-        <%= link_to l(:button_close), close_project_path(@project), :data => {:confirm => l(:text_are_you_sure)}, :method => :post, :class => 'icon icon-lock' %>
-      <% else %>
-        <%= link_to l(:button_reopen), reopen_project_path(@project), :data => {:confirm => l(:text_are_you_sure)}, :method => :post, :class => 'icon icon-unlock' %>
+  <div class="row max-width">
+    <div class="columns large-5">
+      <%= render partial: "projects/jumpbox", locals: { project: (@subprojects.any? ? @project : @project.parent) } %>
+    </div>
+    <div class="columns large-7 contextual" style="margin-right:0; text-align: right;">
+      <% if User.current.allowed_to?(:add_subprojects, @project) && User.current.roles_for_project(@project).include?(Role.find_by_name("Coordinateur")) %>
+        <%= link_to l(:label_subproject_new), new_project_path(:parent_id => @project), :class => 'icon icon-add' %>
       <% end %>
-    <% end %>
+      <% if User.current.allowed_to?(:close_project, @project) && User.current.roles_for_project(@project).include?(Role.find_by_name("Coordinateur")) %>
+        <% if @project.active? %>
+          <%= link_to l(:button_close), close_project_path(@project), :data => {:confirm => l(:text_are_you_sure)}, :method => :post, :class => 'icon icon-lock' %>
+        <% else %>
+          <%= link_to l(:button_reopen), reopen_project_path(@project), :data => {:confirm => l(:text_are_you_sure)}, :method => :post, :class => 'icon icon-unlock' %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-
+  <div class="project-main-title">
+    <div class="columns large-7">
+      <%= page_header_title %>
+    </div>
+  </div>
   <div id="time_line" title=""></div>
-  <h2><%= page_header_title %></h2>
-  <p><%= @project.description %></p>
+  <h2><%= @project.description.blank? ? @project.name : @project.description %></h2>
   <% unless @project.active? %>
     <p class="warning"><span class="icon icon-lock"><%= l(:text_project_closed) %></span></p>
   <% end %>
 
   <div class="splitcontentleft">
-    <ul>
     <% unless @project.homepage.blank? %>
-      <li><%=l(:field_homepage)%>: <%= link_to h(@project.homepage), /^http/.match(@project.homepage) ? @project.homepage : "http://#{@project.homepage}", target: "blank_" %></li>
-    <% end %>
-    <% if @subprojects.any? %>
-      <li><%=l(:label_subproject_plural)%>:
-        <%= @subprojects.collect{|p| link_to p, project_path(p)}.join(", ").html_safe %></li>
+      <p><%=l(:field_homepage)%>: <%= link_to h(@project.homepage), /^http/.match(@project.homepage) ? @project.homepage : "http://#{@project.homepage}", target: "blank_" %></p>
     <% end %>
     <% @project.visible_custom_field_values.each do |custom_value| %>
     <% if !custom_value.value.blank? %>
-       <li><%=h custom_value.custom_field.name %>: <%=h show_value(custom_value) %></li>
+       <p><%=h custom_value.custom_field.name %>: <%=h show_value(custom_value) %></p>
     <% end %>
     <% end %>
-    </ul>
 
     <% if User.current.allowed_to?(:view_issues, @project) %>
     <div class="issues box project-box">
@@ -62,7 +64,11 @@
 
   <div class="splitcontentright">
     <%= render :partial => 'members_box' %>
-
+    <% if authorize_for('news', 'create') %>
+      <div class="contextual project-document-new">
+        <%= link_to l(:label_news_new), new_project_news_path(@project), :class => 'icon icon-add', style: 'float: right;' %>
+      </div>
+    <% end %>
     <% if @news.any? && authorize_for('news', 'index') %>
     <div class="news box project-box">
       <h3><%=l(:label_news_latest)%></h3>

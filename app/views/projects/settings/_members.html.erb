@@ -77,6 +77,12 @@
         <%= render_principals_for_new_members(@project) %>
       </div>
       <p>
+       <label>
+       Si la personne recherchée ne se trouve pas dans la liste, merci de l'inviter à l'aide du formulaire suivant.
+       Afin de permettre l'authentification via la fédération d'identité RENATER, préférer l'utilisation d'adresses institutionelles.
+       </label>
+      </p>
+      <p>
         Email de la personne à inviter :
         <%= text_field_tag('email', nil) %>
       </p>

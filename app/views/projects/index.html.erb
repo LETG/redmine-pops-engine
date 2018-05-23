@@ -11,14 +11,21 @@
 
 <h2><%= l(:label_project_plural) %></h2>
 
-<div id="projects-index">
-<%= render_project_hierarchy(@projects) %>
+<% if User.current.logged? %>
+<div style="text-align:right;margin-bottom: 10px;">
+<span class="my-project"><%= l(:label_my_projects) %></span>
 </div>
 
-<% if User.current.logged? %>
-<p style="text-align:right;">
-<span class="my-project"><%= l(:label_my_projects) %></span>
-</p>
+<% end %>
+<div id="projects-index">
+<%= render_custom_project_hierarchy(@projects) %>
+</div>
+
+<% if defined?(@archived) && @archived.any? %>
+  <h2><%= l(:label_archived_projects) %></h2>
+  <div id="projects-index">
+   <%= render_custom_project_hierarchy(@archived) %>
+  </div>
 <% end %>
 
 <% other_formats_links do |f| %>
@@ -32,5 +39,3 @@
     <p><%= submit_tag l(:button_apply), :class => 'button-small', :name => nil %></p>
   <% end %>
 <% end %>
-
-<% html_title(l(:label_project_plural)) -%>

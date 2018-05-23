@@ -102,8 +102,8 @@ $(document).ready(function() {
 function setDocumentTitle() {
   $("#document_title").addClass('select2');
   $("#document_title").select2({
-      minimumInputLength: 6,
-      placeholder: "Rechercher un article par son titre",
+      minimumInputLength: 3,
+      placeholder: "Rechercher un article par son titre et/ou ses auteurs",
       allowClear: true,
       multiple: false,
       id: function(hit) {
@@ -112,7 +112,7 @@ function setDocumentTitle() {
       ajax: {
           url: '/pops/searchHal',
           dataType: 'json',
-          quietMillis: 1000,
+          //quietMillis: 1000,
           type: 'get',
           data: function (term) {
               return {
@@ -171,14 +171,7 @@ function searchArticleOnHal(id, version, url) {
     url: '/pops/searchArticleOnHal?identifiant=' + id + '&version=' + version,
     success: function (data) {
       $("#document_title").val(data.title);
-      if(data.datepub != undefined) {
-        if (data.datepub.length < 5) {
-          $("#document_created_date").val('01/01/'+data.datepub);
-        }
-      }
-      else {
-        $("#document_created_date").val(data.datepub);
-      }
+      $("#document_created_date").val(data.datepub);
       $("#document_description").val(data.resume + "\n" + data.description);
       $("#document_url_to").val(url);
       $("#url_input_doc").val(url);
