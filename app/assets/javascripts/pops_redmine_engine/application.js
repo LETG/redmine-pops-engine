@@ -8,7 +8,7 @@ $(document).ready(function() {
   if(document.getElementById("project_id")) {
     $.ajax({
       type: 'get',
-      url: '/pops/projects/'+$("#project_id").attr('value')+'/timeline',
+      url: '/projects/'+$("#project_id").attr('value')+'/timeline',
       success: function (data) {
         createTimeline(data);
       }
