@@ -1,0 +1,7 @@
+development:
+  debug_mail: true
+  mail_recipients: [ 'julien.roger@net-helium.fr' ]
+
+production:
+  debug_mail: true
+  mail_recipients: [ 'pops@linaia.com', 'julien.roger@net-helium.fr' ]
