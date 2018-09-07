@@ -1,13 +1,23 @@
 <%= error_messages_for @news_1 %>
 
 <div class="box tabular">
-<p><%= f.text_field :title, :required => true, :size => 60 %></p>
+<p class="<%= (@news.errors && @news.errors.has_key?(:title) ? 'with-errors' : '') %>">
+  <%= f.text_field :title, :required => true, :size => 60 %>
+  <% if @news.errors && @news.errors.has_key?(:title) %>
+    <span class="error-msg"><%= @news.errors[:title].join(', ') %></span>
+  <% end %>
+</p>
 <p><%= f.check_box :private, value: (f.object.private || true) %></p>
 <p><%= f.check_box :visible_in_timeline, value: (f.object.visible_in_timeline || true) %></p>
 <p><%= f.text_field :announcement_date, class: "datepicker", value: f.object.timeline_display_date('%d/%m/%Y') %></p>
 
 <br/>
-<p><%= f.text_area :summary, :cols => 60, :rows => 2 %></p>
+<p class="<%= (@news.errors && @news.errors.has_key?(:summary) ? 'with-errors' : '') %>">
+  <%= f.text_area :summary, :cols => 60, :rows => 2 %>
+  <% if @news.errors && @news.errors.has_key?(:summary) %>
+    <span class="error-msg"><%= @news.errors[:summary].join(', ') %></span>
+  <% end %>
+</p>
 <p><%= f.text_area :description, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
 <p id="attachments_form"><label><%= l(:label_attachment_plural) %></label><%= render :partial => 'attachments/form', :locals => {:container => @news_1} %></p>
 </div>
