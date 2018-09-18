@@ -1,0 +1,53 @@
+<link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline-min.js"></script>
+
+<div id='timeline-embed' style="width: 100%; height: 600px"></div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    TL.Util.unlinkify = function(text) { 
+      return text; 
+    }
+
+    $.ajax({
+      type: 'get',
+      url: '/projects/'+$("#project_id").attr('value')+'/timeline',
+      success: function (data) {
+        /*createStoryJS({
+          width: "100%",
+          height: "350",
+          start_at_end: true,
+          start_zoom_adjust: '0',
+          source: data,
+          type: 'timeline',
+          embed_id: 'timeline-embed'
+        });*/
+
+        timeline = new TL.Timeline('timeline-embed', data, {
+          type:                       'timeline',
+          width:                      '100%',
+          layout:                     "landscape",    // portrait or landscape
+          timenav_position:           "bottom",       // timeline on top or bottom
+          optimal_tick_width:         100,            // optimal distance (in pixels) between ticks on axis
+          base_class:                 "",
+          timenav_height:             250,
+          timenav_height_percentage:  30,
+          timenav_height_min:         150,            // Minimum timenav height
+          marker_height_min:          50,             // Minimum Marker Height
+          marker_width_min:           150,            // Minimum Marker Width
+          marker_padding:             5,              // Top Bottom Marker Padding
+          start_at_slide:             0,
+          menubar_height:             10,
+          skinny_size:                650,
+          height:                     250,
+          start_at_end:               true,
+          start_zoom_adjust:          '0',
+          lang:                       'fr',
+          font:                       'default',
+          timenav_position:           'bottom'
+        });
+      }
+    });
+  });
+</script>

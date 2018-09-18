@@ -21,7 +21,8 @@
       <%= page_header_title %>
     </div>
   </div>
-  <div id="time_line" title=""></div>
+  <!-- div id="time_line" title=""></div-->
+  <%= render partial: "projects/timeline" %>
   <h2><%= @project.description.blank? ? @project.name : @project.description %></h2>
   <% unless @project.active? %>
     <p class="warning"><span class="icon icon-lock"><%= l(:text_project_closed) %></span></p>

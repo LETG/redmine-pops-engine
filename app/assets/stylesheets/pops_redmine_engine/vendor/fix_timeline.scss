@@ -1,4 +1,4 @@
-#time_line {
+/*#time_line {
   display: inline-block;
   height: 334px;
   margin-top: 16px !important;
@@ -15,9 +15,8 @@
     -moz-opacity: 0.75;
     opacity: 0.75;
   }
-}
-
-.storyjs-embed {
+}*/
+/*.storyjs-embed {
   max-height: 200px;
   .vco-storyjs {
     .vco-container {
@@ -33,6 +32,114 @@
           display: none;
         }
 
+      }
+    }
+  }
+}*/
+
+
+#timeline-embed {
+  height: 280px !important;
+  position: relative;
+  .tl-storyslider {
+    height: 0px !important;
+  }
+}
+
+.tl-timenav {
+  .tl-timenav-container {
+    .tl-timemarker {
+      &.tl-timemarker-active {
+        .tl-timemarker-timespan {
+          background: none !important;
+        }
+        .tl-timemarker-timespan, .tl-timemarker-content-container {
+          .tl-timemarker-content {
+            h2.tl-headline {
+              a {
+                div {
+                  &.document {
+                    background-color: #BFBFBF;
+                    color: #FFFFFF;
+                  }
+                  &.news {
+                    background-color: #12968f;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .tl-timemarker-timespan, .tl-timemarker-content-container {
+        // height: 50px !important;
+        width: 180px !important;
+        .tl-timemarker-content {
+          padding: 0;
+          h2.tl-headline {
+            border: none;
+            background-color: transparent;
+            background: none !important;
+            padding: 0;
+            font-size: 11px !important;
+            line-height: 11px !important;
+            &.tl-headline-fadeout:after {
+              background: none !important;
+            }
+            &:hover {
+              a {
+                div {
+                  &.document {
+                    background-color: #BFBFBF;
+                    color: #FFFFFF;
+                  }
+                  &.news {
+                    background-color: #12968f;
+                  }
+                }
+              }
+            }
+            .today {
+              padding: 5px;
+            }
+            a {
+              display: block;
+              height: 100%;
+              &:hover {
+                div {
+                  &.document {
+                    background-color: #BFBFBF;
+                    color: #FFFFFF;
+                  }
+                  &.news {
+                    background-color: #12968f;
+                  }
+                }
+              }
+              div {
+                padding: 5px;
+                height: 100%;
+                &.document {
+                  background-color: #E5E5E5;
+                  color: #BFBFBF;
+                }
+                &.news {
+                  background-color: #17c4bb;
+                  color: #FFFFFF;
+                }
+                .icon {
+                  display: block;
+                  float: left;
+                  padding: 0 10px 0 0;
+                  font-size: 16px;
+                }
+                .content {
+                  padding: 0 0 0 25px;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
