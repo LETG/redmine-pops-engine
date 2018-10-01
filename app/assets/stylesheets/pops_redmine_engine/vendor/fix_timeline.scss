@@ -48,6 +48,37 @@
 
 .tl-timenav {
   .tl-timenav-container {
+    .tl-timemarker:not(.tl-timemarker-with-end) {
+      .tl-timemarker-timespan, .tl-timemarker-content-container {
+        width: 180px !important;
+      }
+    }
+  }
+  #project_event-marker {
+    .tl-timemarker-timespan {
+      .tl-timemarker-timespan-content {
+        display: none;
+      }
+      .tl-timemarker-line-left, .tl-timemarker-line-right {
+        border: none;
+        background-color: transparent;
+        &:after {
+          background-color: #333333;
+        }
+      }
+      &:after {
+        background-color: #0088cc;
+      }
+    }
+    .tl-timemarker-content-container {
+      display: none;
+    }
+  }
+}
+
+
+.tl-timenav {
+  .tl-timenav-container {
     .tl-timemarker {
       &.tl-timemarker-active {
         .tl-timemarker-timespan {
@@ -58,9 +89,12 @@
             h2.tl-headline {
               a {
                 div {
+                  &.today {
+                    color: #1F2B3D;
+                  }
                   &.document {
-                    background-color: #BFBFBF;
-                    color: #FFFFFF;
+                    background-color: #778EA2;
+                    color: #DDE0E6;
                   }
                   &.news {
                     background-color: #12968f;
@@ -72,8 +106,6 @@
         }
       }
       .tl-timemarker-timespan, .tl-timemarker-content-container {
-        // height: 50px !important;
-        width: 180px !important;
         .tl-timemarker-content {
           padding: 0;
           h2.tl-headline {
@@ -90,8 +122,8 @@
               a {
                 div {
                   &.document {
-                    background-color: #BFBFBF;
-                    color: #FFFFFF;
+                    background-color: #778EA2;
+                    color: #DDE0E6;
                   }
                   &.news {
                     background-color: #12968f;
@@ -108,8 +140,8 @@
               &:hover {
                 div {
                   &.document {
-                    background-color: #BFBFBF;
-                    color: #FFFFFF;
+                    background-color: #778EA2;
+                    color: #DDE0E6;
                   }
                   &.news {
                     background-color: #12968f;
@@ -120,8 +152,8 @@
                 padding: 5px;
                 height: 100%;
                 &.document {
-                  background-color: #E5E5E5;
-                  color: #BFBFBF;
+                  background-color: #BBC3CE;
+                  color: #54778E;
                 }
                 &.news {
                   background-color: #17c4bb;
