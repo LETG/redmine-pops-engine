@@ -37,6 +37,11 @@
   }
 }*/
 
+.project-show {
+  .row.max-width {
+    min-height: 53px;
+  }
+}
 
 #timeline-embed {
   height: 280px !important;
@@ -93,7 +98,7 @@
                     color: #1F2B3D;
                   }
                   &.document {
-                    background-color: #778EA2;
+                    background-color: #98ADBB;
                     color: #DDE0E6;
                   }
                   &.news {
@@ -122,7 +127,7 @@
               a {
                 div {
                   &.document {
-                    background-color: #778EA2;
+                    background-color: #98ADBB;
                     color: #DDE0E6;
                   }
                   &.news {
@@ -140,7 +145,7 @@
               &:hover {
                 div {
                   &.document {
-                    background-color: #778EA2;
+                    background-color: #98ADBB;
                     color: #DDE0E6;
                   }
                   &.news {
@@ -152,7 +157,7 @@
                 padding: 5px;
                 height: 100%;
                 &.document {
-                  background-color: #BBC3CE;
+                  background-color: #CBD1DA;
                   color: #54778E;
                 }
                 &.news {
