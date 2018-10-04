@@ -62,11 +62,11 @@
   #project_event-marker {
     .tl-timemarker-timespan {
       .tl-timemarker-timespan-content {
-        display: none;
+        // display: none;
       }
       .tl-timemarker-line-left, .tl-timemarker-line-right {
-        border: none;
-        background-color: transparent;
+        // border: none;
+        // background-color: transparent;
         &:after {
           background-color: #333333;
         }
@@ -76,7 +76,7 @@
       }
     }
     .tl-timemarker-content-container {
-      display: none;
+      // display: none;
     }
   }
 }
