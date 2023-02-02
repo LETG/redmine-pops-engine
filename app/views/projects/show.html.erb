@@ -28,56 +28,58 @@
     <p class="warning"><span class="icon icon-lock"><%= l(:text_project_closed) %></span></p>
   <% end %>
 
-  <div class="splitcontentleft">
-    <% unless @project.homepage.blank? %>
-      <p><%=l(:field_homepage)%>: <%= link_to h(@project.homepage), /^http/.match(@project.homepage) ? @project.homepage : "http://#{@project.homepage}", target: "blank_" %></p>
-    <% end %>
-    <% @project.visible_custom_field_values.each do |custom_value| %>
-    <% if !custom_value.value.blank? %>
-       <p><%=h custom_value.custom_field.name %>: <%=h show_value(custom_value) %></p>
-    <% end %>
-    <% end %>
-
-    <% if User.current.allowed_to?(:view_issues, @project) %>
-    <div class="issues box project-box">
-      <h3><%=l(:label_issue_tracking)%></h3>
-      <ul>
-      <% for tracker in @trackers %>
-        <li><%= link_to h(tracker.name), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id) %>:
-            <%= l(:label_x_open_issues_abbr_on_total, :count => @open_issues_by_tracker[tracker].to_i,
-                                                      :total => @total_issues_by_tracker[tracker].to_i) %>
-        </li>
+  <div class="splitcontent">
+    <div class="splitcontentleft">
+      <% unless @project.homepage.blank? %>
+        <p><%=l(:field_homepage)%>: <%= link_to h(@project.homepage), /^http/.match(@project.homepage) ? @project.homepage : "http://#{@project.homepage}", target: "blank_" %></p>
       <% end %>
-      </ul>
-      <p>
-        <%= link_to l(:label_issue_view_all), project_issues_path(@project, :set_filter => 1) %>
-        <% if User.current.allowed_to?(:view_calendar, @project, :global => true) %>
-          | <%= link_to l(:label_calendar), project_calendar_path(@project) %>
-        <% end %>
-        <% if User.current.allowed_to?(:view_gantt, @project, :global => true) %>
-          | <%= link_to l(:label_gantt), project_gantt_path(@project) %>
-        <% end %>
-      </p>
-    </div>
-    <% end %>
-    <%= call_hook(:view_projects_show_left, :project => @project) %>
-  </div>
+      <% @project.visible_custom_field_values.each do |custom_value| %>
+      <% if !custom_value.value.blank? %>
+         <p><%=h custom_value.custom_field.name %>: <%=h show_value(custom_value) %></p>
+      <% end %>
+      <% end %>
 
-  <div class="splitcontentright">
-    <%= render :partial => 'members_box' %>
-    <% if authorize_for('news', 'create') %>
-      <div class="contextual project-document-new">
-        <%= link_to l(:label_news_new), new_project_news_path(@project), :class => 'icon icon-add', style: 'float: right;' %>
+      <% if User.current.allowed_to?(:view_issues, @project) %>
+      <div class="issues box project-box">
+        <h3><%=l(:label_issue_tracking)%></h3>
+        <ul>
+        <% for tracker in @trackers %>
+          <li><%= link_to h(tracker.name), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id) %>:
+              <%= l(:label_x_open_issues_abbr_on_total, :count => @open_issues_by_tracker[tracker].to_i,
+                                                        :total => @total_issues_by_tracker[tracker].to_i) %>
+          </li>
+        <% end %>
+        </ul>
+        <p>
+          <%= link_to l(:label_issue_view_all), project_issues_path(@project, :set_filter => 1) %>
+          <% if User.current.allowed_to?(:view_calendar, @project, :global => true) %>
+            | <%= link_to l(:label_calendar), project_calendar_path(@project) %>
+          <% end %>
+          <% if User.current.allowed_to?(:view_gantt, @project, :global => true) %>
+            | <%= link_to l(:label_gantt), project_gantt_path(@project) %>
+          <% end %>
+        </p>
       </div>
-    <% end %>
-    <% if @news.any? && authorize_for('news', 'index') %>
-    <div class="news box project-box">
-      <h3><%=l(:label_news_latest)%></h3>
-      <%= render :partial => 'news/news', :collection => @news %>
-      <p><%= link_to l(:label_news_view_all), project_news_index_path(@project) %></p>
+      <% end %>
+      <%= call_hook(:view_projects_show_left, :project => @project) %>
     </div>
-    <% end %>
-    <%= call_hook(:view_projects_show_right, :project => @project) %>
+
+    <div class="splitcontentright">
+      <%= render :partial => 'members_box' %>
+      <% if authorize_for('news', 'create') %>
+        <div class="contextual project-document-new">
+          <%= link_to l(:label_news_new), new_project_news_path(@project), :class => 'icon icon-add', style: 'float: right;' %>
+        </div>
+      <% end %>
+      <% if @news.any? && authorize_for('news', 'index') %>
+      <div class="news box project-box">
+        <h3><%=l(:label_news_latest)%></h3>
+        <%= render :partial => 'news/news', :collection => @news %>
+        <p><%= link_to l(:label_news_view_all), project_news_index_path(@project) %></p>
+      </div>
+      <% end %>
+      <%= call_hook(:view_projects_show_right, :project => @project) %>
+    </div>
   </div>
 
   <% content_for :sidebar do %>

@@ -5,6 +5,6 @@ Project.instance_eval do
     visible(user)
       .order("starts_date DESC")
       .select { |p| [p] if p.ancestors.empty? }
-      .first(count)    
+      .first(count)
   end
 end

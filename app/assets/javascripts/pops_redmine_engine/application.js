@@ -1,11 +1,9 @@
 //= require ./vendor/vendor
 
-VMM.Util.untagify = function(text) { return text; }
-
+// VMM.Util.untagify = function(text) { return text; }
 
 $(document).ready(function() {
-
-  if(document.getElementById("project_id")) {
+  /* if(document.getElementById("project_id")) {
     $.ajax({
       type: 'get',
       url: '/projects/'+$("#project_id").attr('value')+'/timeline',
@@ -25,7 +23,7 @@ $(document).ready(function() {
             embed_id: 'time_line'
         });
     }
-  }
+  } */
 
   // jQuery('input[name=switch]:radio').click(function(){
   //     var v = jQuery(this).val();
