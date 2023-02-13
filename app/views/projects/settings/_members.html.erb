@@ -1,11 +1,11 @@
 <%= error_messages_for 'member' %>
 <% roles = Role.find_all_givable
-   members = @project.member_principals.includes(:member_roles, :roles, :principal).all.sort %>
+   members = @project.memberships.active.includes(:member_roles, :roles, :principal).all.sort %>
 
 <div class="splitcontentleft">
-  <% members = @members unless local_assigns.has_key?(:members) %>
+  <% members ||= @members %>
 
-  <% if members.any? %>
+  <% if members && members.any? %>
     <table class="list members">
       <thead>
         <tr>
@@ -102,9 +102,9 @@
 <% content_for :header_tags do %>
   <script type="text/javascript">
     $(document).ready(function() {
-      $("body").delegate("#member-add-submit", "click", function(e) {
-        console.log("disabled");
-        $(e.currentTarget).attr("disabled", "disabled");
+      $("body").delegate("#new_membership", "submit", function(e) {
+        $("#member-add-submit").attr("disabled", "disabled");
+        return true;
       });
     });
   </script>
