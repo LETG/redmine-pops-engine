@@ -1,5 +1,6 @@
-class ActivitiesController < ApplicationController
-
+ActivitiesController.class_eval do
+  self.main_menu = false
+  
   def index
     @days = Setting.activity_days_default.to_i
 
@@ -45,5 +46,4 @@ class ActivitiesController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-
 end
