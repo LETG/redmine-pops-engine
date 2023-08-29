@@ -10,15 +10,24 @@
 </div>
 
 <h2><%= l(:label_project_plural) %></h2>
+<%= form_tag(projects_path(@project, nil), :method => :get, :id => 'query_form') do %>
+  <%= render :partial => 'projects/query_form' %>
+<% end %>
 
 <% if User.current.logged? %>
-<div style="text-align:right;margin-bottom: 10px;">
-<span class="my-project"><%= l(:label_my_projects) %></span>
-</div>
-
+  <div style="text-align:right;margin-bottom: 10px;">
+  <span class="my-project"><%= l(:label_my_projects) %></span>
+  </div>
 <% end %>
+
 <div id="projects-index">
-<%= render_custom_project_hierarchy(@projects) %>
+  <% if @query.valid? %>
+    <% if @projects.empty? %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% else %>
+      <%= render_custom_project_hierarchy(@projects) %>
+    <% end %>
+  <% end %>
 </div>
 
 <% if defined?(@archived) && @archived.any? %>
