@@ -15,8 +15,13 @@
   <p><%= f.check_box :visible_to_public, {checked: @document.visible_to_public} %></p>
 </div>
 
+<%= render partial: 'documents/datacite/search' %>
+
 <div class="box tabular" style="position: relative;">
-  <p><%= f.check_box :hal, {checked: false, disabled: !@document.title.blank? }%></p>
+  <p style="margin-bottom: 15px;">
+    <%= f.check_box :hal, { checked: false, disabled: !@document.title.blank?, label: '', style: "float: left; margin-top: 5px !important;" } %>
+    <label for="document_hal" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_hal") %></label>
+  </p>
 
   <%= render :partial => 'document_fields', :locals => {:f => f} %>
 

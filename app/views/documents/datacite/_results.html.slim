@@ -1,0 +1,20 @@
+hr
+
+.datacite-dois
+  - if @warning_message.present?
+    .alert.alert-warning= @warning_message
+  - else
+    - if @results && @results.any?
+      - @results.each do |r|
+        = link_to "#", id: "datacite_#{r.id}", class: "datacite-doi", data: { title: r.title, published_at: r.published_at.strftime("%d/%m/%Y"), description: r.abstract, url: r.url } do
+          h4.title
+            = r.title
+          div.publication
+            = [r.publisher, (r.published_at.strftime("%d/%m/%Y") rescue nil)].select(&:present?).join(" - ")
+          p.abstract
+            = r.abstract
+        hr
+    - else
+      .alert.alert-warning Aucun résultat
+
+

@@ -95,7 +95,44 @@ $(document).ready(function() {
       $("#document_title").select2('destroy');
     }
   });
+
+  $("body").delegate("#search_datacite", "click", function(e) {
+    searchDatacite();
+    return false;
+  });
+
+  $("body").delegate("#datacite_query", 'keypress',function(e) {
+    if(e.which == 13) {
+      searchDatacite();
+      return false;
+    }
+  });
+
+  $("body").delegate(".datacite-doi", 'click', function(e) {
+    var target = $(e.currentTarget);
+
+    $("#document_title").val(target.data("title"));
+    $("#document_created_at").val(target.data("published_at"));
+    $("#document_description").val(target.data("description"));
+    $("#document_created_at").val(target.data("published_at"));
+    $("#document_url_to").val(target.data("url"));
+    return false;
+  });
 });
+
+function searchDatacite() {
+  $.ajax({
+    url:  "/pops/datacite/search",
+    type: "POST",
+    dataType: "html",
+    data: {
+      query: $("#datacite_query").val()
+    },
+    success: function(data) {
+      $("#datacite_results").html(data);
+    }
+  });
+}
 
 function setDocumentTitle() {
   $("#document_title").addClass('select2');

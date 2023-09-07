@@ -125,3 +125,67 @@ $document-line-margin: 3px;
 #user_url {
   width: 90%;
 }
+
+/* STYLE RECHERCHE DATACITE */
+.box.datacite {
+  h3 {
+    padding-left: 180px;
+  }
+  .actions {
+    a {
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      background-color: #17C4BB;
+      color: #FFF;
+      border: none;
+      padding: 7px 15px;
+      margin-left: 0px;
+      height: auto;
+      display: block;
+      float: left;
+    }
+  }
+
+  .datacite-dois {
+    padding-left: 180px;
+    padding-right: 25px;
+    
+    .datacite-doi {
+      color: #000000;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      h4 {
+        border-bottom: none;
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+
+      .publication {
+        font-size: 0.875rem;
+      }
+
+      .abstract {
+        font-size: 0.850rem;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.alert {
+  font-weight: bold;
+  margin-bottom: 15px;
+  border: 1px solid #c4c8cb;
+  background-color: #e2e3e5;
+  padding: 10px 25px;
+  border-radius: 5px;
+
+  &.alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffe69c;
+  }
+}
