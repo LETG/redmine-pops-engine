@@ -13,6 +13,7 @@
   <br/>
   <p><%= f.check_box :visible_in_timeline, {checked: @document.visible_in_timeline} %></p>
   <p><%= f.check_box :visible_to_public, {checked: @document.visible_to_public} %></p>
+  <p><%= f.check_box :notifications_disabled, { checked: @document.notifications_disabled } %></p>
 </div>
 
 <%= render partial: 'documents/datacite/search' %>

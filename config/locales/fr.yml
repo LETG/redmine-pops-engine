@@ -10,6 +10,7 @@ fr:
   field_url_to: URL
   field_url: Site web laboratoire
   field_visible_to_public: Visible au public
+  field_notifications_disabled: Désactiver les notifications
 
   field_accronym: Accronyme
   field_objectifs: Objectifs
