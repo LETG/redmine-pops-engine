@@ -1,0 +1,76 @@
+<% 
+  available_filters = query.available_filters_as_json.inject({}) do |h, (k,v)|
+    v["values"].prepend(['', '']) if v["values"] && v["values"].is_a?(Array)
+    h[k] = v
+    h
+  end
+%>
+
+<%= javascript_tag do %>
+  var operatorLabels = <%= raw_json Query.operators_labels %>;
+  var operatorByType = <%= raw_json Query.operators_by_filter_type %>;
+  var availableFilters = <%= raw_json available_filters %>;
+  var labelDayPlural = <%= raw_json l(:label_day_plural) %>;
+
+  var filtersUrl = <%= raw_json queries_filter_path(:project_id => @query.project.try(:id), :type => @query.type) %>;
+
+  $(document).ready(function(){
+    initFilters();
+
+    <% query.available_filters.each do |field, options| %>
+      <% if query.filters.has_key?(field) %>
+        addFilter("<%= field %>", <%= raw_json query.operator_for(field) %>, <%= raw_json query.values_for(field) %>);
+      <% else %>
+        addFilter("<%= field %>", '', []);
+      <% end %>
+    <% end %>
+
+    $("body").delegate("#filters-table", "filter:loaded", function(e) {
+      loadSelect2();
+    });
+
+    loadSelect2();
+    var width  = null;
+
+    function loadSelect2() {
+      $("td.field input[type='checkbox']").hide();
+      $("td.values .toggle-multiselect").hide();
+
+      $.each($("td.values select"), function(idx, elt) {
+        if(width == null) {
+          width  = $(elt).parent().width() - 10;
+        }
+        
+        if ($(elt).hasClass("select2")) {
+          $(elt).select2('destroy');
+        } else {
+          $(elt).attr("multiple", true);
+
+          var values = [];
+          
+          for(var i = 0; i < $(elt).val().length; i++) {
+            if ($(elt).val()[i].length > 0) {
+              values.push($(elt).val()[i]);
+            }
+          }
+
+          $(elt).val(values);
+          // $(elt).addClass("select2");
+        }
+
+        $(elt).css("width", width + "px");
+        $(elt).select2({ dropdownPosition: 'below' });
+      });
+    }
+  });
+<% end %>
+
+<table id="filters-table">
+</table>
+
+
+<%= hidden_field_tag 'f[]', '' %>
+<% include_calendar_headers_tags %>
+
+
+

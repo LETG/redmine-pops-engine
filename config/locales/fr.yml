@@ -5,7 +5,7 @@ fr:
   field_manual_document: Saisie manuelle
   field_hal: Recherche HAL (Attention les champs qui suivent seront automatiquement remplis)
   field_datacite: Recherche Datacite (Attention les champs qui suivent seront automatiquement remplis)
-  field_lab_name: Laboratoire
+  field_labs: Laboratoire
   field_sponsor: Financeur du programme
   field_old_password: Ancient mot de passe
   field_tag_list: Types

@@ -89,3 +89,36 @@ function searchArticleOnHal(id, version, url) {
     }
   });
 }
+
+function addFilter(field, operator, values) {
+  var fieldId = field.replace('.', '_');
+  var tr = $('#tr_'+fieldId);
+
+  var filterOptions = availableFilters[field];
+  if (!filterOptions) return;
+
+  if (filterOptions['remote'] && filterOptions['values'] == null) {
+    $.getJSON(filtersUrl, {'name': field}).done(function(data) {
+      filterOptions['values'] = data;
+      addFilter(field, operator, values);
+    });
+
+    return;
+  }
+
+  if (tr.length > 0) {
+    tr.show();
+  } else {
+    buildFilterRow(field, operator, values);
+  }
+  $('#cb_'+fieldId).prop('checked', true);
+  toggleFilter(field);
+  toggleMultiSelectIconInit();
+  $('#add_filter_select').val('').find('option').each(function() {
+    if ($(this).attr('value') == field) {
+      $(this).attr('disabled', true);
+    }
+  });
+
+  $("#filters-table").trigger("filter:loaded");
+}
