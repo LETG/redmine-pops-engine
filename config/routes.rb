@@ -2,7 +2,7 @@ PopsRedmineEngine::Engine.routes.draw do
   RedmineApp::Application.routes.draw do
     resources :datacite, only: [] do
       collection do
-        post 'search'
+        get 'search'
       end
     end
 

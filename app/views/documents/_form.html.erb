@@ -5,30 +5,49 @@
   </p>
   <% ActsAsTaggableOn::Tag.order(:name).each_with_index do |t, index| %>
     <p>
-      <%= label_tag("document[tag_list]", t.name) %>
-      <%= radio_button_tag("document[tag_list]", t.name, checked = (@document.tags.count == 0 && index == 0) ? true : (@document.tags.include?(ActsAsTaggableOn::Tag.where(name: t.name).first)), options = {}) %>
+      <%= radio_button_tag("document[tag_list]", t.name, checked = (@document.tags.count == 0 && index == 0) ? true : (@document.tags.include?(ActsAsTaggableOn::Tag.where(name: t.name).first)), options = {style: "float: left; margin-top: 5px !important;"})  %>
+      <%= label_tag("document[tag_list]", t.name, style: 'float: left; text-align: left; width: auto;') %>
     <br/>
     </p>
   <% end %>
   <br/>
-  <p><%= f.check_box :visible_in_timeline, { checked: @document.visible_in_timeline } %></p>
+  <p>
+    <%= f.check_box :visible_in_timeline, { checked: @document.visible_in_timeline, label: '', style: "float: left; margin-top: 5px !important;" } %>
+    <label for="visible_in_timeline" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_visible_in_timeline") %></label>
+  </p>
   
   <% if f.object.project && f.object.project.is_public %>
-    <p><%= f.check_box :visible_to_public, { checked: @document.visible_to_public } %></p>
+    <p>
+      <%= f.check_box :visible_to_public, { checked: @document.visible_to_public, label: '', style: "float: left; margin-top: 5px !important;" } %>
+      <label for="visible_to_public" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_visible_to_public") %></label>
+    </p>
   <% else %>
     <p style="display: none;"><%= f.check_box :visible_to_public, { checked: false } %></p>
   <% end %>
 
-  <p><%= f.check_box :notifications_disabled, { checked: @document.notifications_disabled } %></p>
+  <p>
+    <%= f.check_box :notifications_disabled, { checked: @document.notifications_disabled, label: '', style: "float: left; margin-top: 5px !important;" } %>
+      <label for="notifications_disabled" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_notifications_disabled") %></label>
+  </p>
 </div>
 
-<%= render partial: 'documents/datacite/search' %>
+<% render partial: 'documents/datacite/search' %>
 
 <div class="box tabular" style="position: relative;">
-  <p style="margin-bottom: 15px;">
-    <%= f.check_box :hal, { checked: false, disabled: !@document.title.blank?, label: '', style: "float: left; margin-top: 5px !important;" } %>
-    <label for="document_hal" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_hal") %></label>
-  </p>
+  <% if f.object.new_record? %>
+    <p>
+      <%= radio_button_tag :mode, 'manual', true, { style: "float: left; margin-top: 5px !important;" } %>
+      <label for="mode_manual" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_manual_document") %></label>
+    </p>
+    <p>
+      <%= radio_button_tag :mode, 'hal', false, { style: "float: left; margin-top: 5px !important;" } %>
+      <label for="mode_hal" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_hal") %></label>
+    </p>
+    <p style="margin-bottom: 15px;">
+      <%= radio_button_tag :mode, 'datacite', false, { style: "float: left; margin-top: 5px !important;" } %>
+      <label for="mode_datacite" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_datacite") %></label>
+    </p>
+  <% end %>
 
   <%= render :partial => 'document_fields', :locals => {:f => f} %>
 

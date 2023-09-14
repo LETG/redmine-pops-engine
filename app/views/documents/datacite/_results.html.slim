@@ -12,7 +12,7 @@ hr
           div.publication
             = [r.publisher, (r.published_at.strftime("%d/%m/%Y") rescue nil)].select(&:present?).join(" - ")
           p.abstract
-            = r.abstract
+            = r.abstract.to_s.truncate(150, omission: "...")
         hr
     - else
       .alert.alert-warning Aucun résultat

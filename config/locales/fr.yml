@@ -2,7 +2,9 @@ fr:
   field_created_date: Date du document
   field_starts_date: Date de début
   field_ends_date: Date de fin
+  field_manual_document: Saisie manuelle
   field_hal: Recherche HAL (Attention les champs qui suivent seront automatiquement remplis)
+  field_datacite: Recherche Datacite (Attention les champs qui suivent seront automatiquement remplis)
   field_lab_name: Laboratoire
   field_sponsor: Financeur du programme
   field_old_password: Ancient mot de passe

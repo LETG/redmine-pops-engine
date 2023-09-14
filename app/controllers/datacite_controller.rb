@@ -1,10 +1,11 @@
 class DataciteController < ApplicationController
   def search
     min_words = 2
-    query     = params[:query].split(" ")
+    query     = params[:title].split(" ")
 
     if query.count < min_words
       @warning_message = "Vous devez saisir au moins #{min_words} mots pour rechercher les documents Datacite"
+      @results = []
     else
       source = "https://api.datacite.org/dois"
       articles = []
@@ -18,7 +19,8 @@ class DataciteController < ApplicationController
     end
     
     respond_to do |format|
-      format.json { return render partial: 'documents/datacite/results', formats: [ :html ] }
+      format.json  { render json: @results }
+      # format.json { return render partial: 'documents/datacite/results', formats: [ :html ] }
     end
   end
 
@@ -44,8 +46,9 @@ class DataciteController < ApplicationController
 
       article[:url]          = data.dig(*"attributes.url".split("."))
       article[:publisher]    = data.dig(*"attributes.publisher".split("."))
-      article[:published_at] = Time.parse(data.dig(*"attributes.created".split("."))) rescue nil
+      article[:published_at] = Time.parse(data.dig(*"attributes.created".split("."))).strftime("%d/%m/%Y") rescue nil
 
-      OpenStruct.new(article)
+      # OpenStruct.new(article)
+      article
     end
 end
