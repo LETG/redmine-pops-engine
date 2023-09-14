@@ -7,7 +7,13 @@
     <span class="error-msg"><%= @news.errors[:title].join(', ') %></span>
   <% end %>
 </p>
-<p><%= f.check_box :private, value: (f.object.private || true) %></p>
+
+<% if f.object.project && !f.object.project.is_public %>
+  <p><%= f.check_box :private, value: (f.object.private || true) %></p>
+<% else %>
+  <p style="display: none;"><%= f.check_box :private, value: true, checked: true %></p>
+<% end %>
+
 <p><%= f.check_box :visible_in_timeline, value: (f.object.visible_in_timeline || true) %></p>
 <p><%= f.check_box :notifications_disabled, value: (f.object.notifications_disabled || false) %></p>
 <p><%= f.text_field :announcement_date, class: "datepicker", value: f.object.timeline_display_date('%d/%m/%Y') %></p>
