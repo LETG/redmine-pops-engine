@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails"
   s.add_dependency "slim"
   s.add_dependency "sass", "~>3.4.0"
-  s.add_dependency "timelineJS-rails"
+  # s.add_dependency "timelineJS-rails"
   s.add_dependency "compass-rails"
   s.add_dependency 'savon'
   s.add_dependency "cocoon"

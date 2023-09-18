@@ -8,8 +8,10 @@
 
   <% if @attachment.preview_convertible? %>
     <style>
-      #preview_pane > object {
-        top: 15px !important;
+      #preview_pane {
+        padding-top: 0 !important;
+      }
+      #preview_pane > object, #preview_pane > iframe {
         width: 100% !important;
       }
     </style>
@@ -25,7 +27,7 @@
         <%= link_to l(:button_update), reloadpath, :class => "icon icon-reload" %>
         <%= call_hook(:preview_attachment_contextual, :attachment => @attachment, :project => @project ) %>
       </p>
-    </div><div style="clear:both;"></div>
+    </div>
     
     <%- case RedmineMorePreviews::Converter.conversion_ext(@attachment.diskfile) %>
     <%- when "inline" %>

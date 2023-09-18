@@ -1,42 +1,3 @@
-/*#time_line {
-  display: inline-block;
-  height: 334px;
-  margin-top: 16px !important;
-  .icon {
-    padding: 0px;
-  }
-  .timeline-tooltip-inner {
-    display: none;
-  }
-  .vco-timeline .vco-navigation .timenav .content .marker .line .event-line {
-    background: #0088cc;
-    filter: alpha(opacity=75);
-    -khtml-opacity: 0.75;
-    -moz-opacity: 0.75;
-    opacity: 0.75;
-  }
-}*/
-/*.storyjs-embed {
-  max-height: 200px;
-  .vco-storyjs {
-    .vco-container {
-      width: 100%;
-      .vco-feature {
-        width: 100%;
-        height: 6px;
-        @include box-shadow(1px 1px 7px rgba(0, 0, 0, 0.3));
-        position: absolute;
-        top: -6;
-        z-index: 2;
-        .vco-slider {
-          display: none;
-        }
-
-      }
-    }
-  }
-}*/
-
 .project-show {
   .row.max-width {
     min-height: 53px;
@@ -81,7 +42,6 @@
   }
 }
 
-
 .tl-timenav {
   .tl-timenav-container {
     .tl-timemarker {
@@ -94,18 +54,16 @@
             .tl-timemarker-text {
               height: 100%;
               h2.tl-headline {
-                a {
-                  div {
-                    &.today {
-                      color: #1F2B3D;
-                    }
-                    &.document {
-                      background-color: #98ADBB;
-                      color: #DDE0E6;
-                    }
-                    &.news {
-                      background-color: #12968f;
-                    }
+                div {
+                  &.today {
+                    color: #1F2B3D;
+                  }
+                  &.document {
+                    background-color: #98ADBB;
+                    color: #DDE0E6;
+                  }
+                  &.news {
+                    background-color: #12968f;
                   }
                 }
               }
@@ -128,56 +86,46 @@
               &.tl-headline-fadeout:after {
                 background: none !important;
               }
-              &:hover {
-                a {
-                  div {
-                    &.document {
-                      background-color: #98ADBB;
-                      color: #DDE0E6;
-                    }
-                    &.news {
-                      background-color: #12968f;
-                    }
-                  }
-                }
-              }
               .today {
                 padding: 5px;
               }
               a {
                 display: block;
                 height: 100%;
-                &:hover {
-                  div {
-                    &.document {
-                      background-color: #98ADBB;
-                      color: #DDE0E6;
-                    }
-                    &.news {
-                      background-color: #12968f;
-                    }
+              }
+              div {
+                padding: 5px;
+                height: 100%;
+                &.document {
+                  &.cat-2 {
+                    background-color: #357de7;
+                    color: #FFFFFF;
                   }
-                }
-                div {
-                  padding: 5px;
-                  height: 100%;
-                  &.document {
+                  &.cat-3 {
+                    background-color: #c0400e;
+                    color: #FFFFFF;
+                  }
+                  &.cat-4 {
+                    background-color: #be1b67;
+                    color: #FFFFFF;
+                  }
+                  &.other {
                     background-color: #CBD1DA;
                     color: #54778E;
                   }
-                  &.news {
-                    background-color: #17c4bb;
-                    color: #FFFFFF;
-                  }
-                  .icon {
-                    display: block;
-                    float: left;
-                    padding: 0 10px 0 0;
-                    font-size: 16px;
-                  }
-                  .content {
-                    padding: 0 0 0 25px;
-                  }
+                }
+                &.news {
+                  background-color: #17c4bb;
+                  color: #FFFFFF;
+                }
+                .icon {
+                  display: block;
+                  float: left;
+                  padding: 0 10px 0 0;
+                  font-size: 16px;
+                }
+                .content {
+                  padding: 0 0 0 25px;
                 }
               }
             }
@@ -186,4 +134,19 @@
       }
     }
   }
+}
+
+.tl-menubar {
+  top: 40px !important;
+}
+.tl-menubar-button {
+  margin: 0 !important;
+  height: 30px;
+}
+
+.tl-attribution {
+  display: none;
+}
+.tl-timegroup .tl-timegroup-message {
+  color: #222222 !important;
 }
