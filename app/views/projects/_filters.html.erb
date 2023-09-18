@@ -26,7 +26,16 @@
     <% end %>
 
     $("body").delegate("#filters-table", "filter:loaded", function(e) {
+      <% if params["f"].present? && !params["v"].has_key?('status') %>
+        $("select#values_status_1").val(null);
+      <% end %>
+
       loadSelect2();
+
+      $("tr:not(#tr_labs) .operator select").off('change');
+      $("tr#tr_labs .operator select option[value='!*']").remove();
+      $("tr#tr_labs .operator select option[value='*']").remove();
+      $("tr:not(#tr_labs) .operator select option[value='!']").remove();
     });
 
     loadSelect2();

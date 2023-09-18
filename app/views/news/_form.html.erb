@@ -8,7 +8,7 @@
   <% end %>
 </p>
 
-<% if f.object.project && !f.object.project.is_public %>
+<% if @project && @project.is_public %>
   <p><%= f.check_box :private, value: (f.object.private || true) %></p>
 <% else %>
   <p style="display: none;"><%= f.check_box :private, value: true, checked: true %></p>

@@ -1,6 +1,6 @@
 class DataciteController < ApplicationController
   def search
-    min_words = 2
+    min_words = 1
     query     = params[:title].split(" ")
 
     if query.count < min_words

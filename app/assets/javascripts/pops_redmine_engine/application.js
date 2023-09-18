@@ -1,6 +1,7 @@
 //= require ./vendor/vendor
 
-var root_path = "/pops"
+// var root_path = "/pops"
+var root_path = ""
 
 $(document).ready(function() {
   $("body").delegate(".new_document input[name='document[title]']", "change", function(e) {
@@ -18,10 +19,24 @@ $(document).ready(function() {
         break;
       case 'datacite':
         activateSearch("/datacite/search", {
+          minimumInputLength: 6,
+          placeholder: "Rechercher une référence par son titre et/ou ses auteurs",
           id: function(hit) { 
             return hit.id; 
           },
-          formatResult: function(item) { return item.title; },
+          formatResult: function(item) { 
+            var creators = []
+            
+            $.each(item.creators, function(idx, creator) {
+              if (creators.length < 10) {
+                creators.push(creator.name);
+              } else if (creators.length == 10) {
+                creators.push("...");
+              }
+            });
+            
+            return "<p style='margin-bottom: 2px;'><strong>" + item.title + "</strong><br/><small style='font-size: 85%; font-style: italic;'>" + creators.join(' / ') + "</small></p>"; 
+          },
           formatSelection: function(item) {
             $("#document_title").val(item.title);
             $("#document_description").val(item.abstract);
@@ -44,6 +59,7 @@ function activateSearch(url, options) {
     placeholder: "Rechercher un article par son titre et/ou ses auteurs",
     allowClear: true,
     multiple: false,
+    width: '95%',
     id: function(hit) { return hit.identifiant; },
     ajax: {
       url: root_path + url,
