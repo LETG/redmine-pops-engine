@@ -1,7 +1,7 @@
 //= require ./vendor/vendor
 
-// var root_path = "/pops"
-var root_path = ""
+var root_path = "/pops"
+// var root_path = ""
 
 $(document).ready(function() {
   $("body").delegate(".new_document input[name='document[title]']", "change", function(e) {
