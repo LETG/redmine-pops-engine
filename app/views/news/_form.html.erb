@@ -14,7 +14,10 @@
 <% if @project && @project.is_public %>
   <p>
     <%= radio_button_tag('news_private', true, initial_private, style: 'float: left; margin-top: 5px !important;') %>
-    <%= label_tag('news_private_true', I18n.t('news_private'), style: 'float: left; text-align: left; width: auto;') %>
+    <%= label_tag('news_private_true', style: 'float: left; text-align: left; width: auto;') do %>
+      <%= tag.i(class: 'fa fa-lock', style: 'margin-right: 5px;') %>
+      <%= I18n.t('news_private') %>
+    <% end %>
     <%= radio_button_tag('news_private', false, !initial_private, style: 'float: left; margin-top: 5px !important;') %>
     <%= label_tag('news_private_false', I18n.t('news_public'), style: 'float: left; text-align: left; width: auto;') %>
   </p>

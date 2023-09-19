@@ -18,7 +18,10 @@
   <% if f.object.project && f.object.project.is_public %>
     <p>
       <%= radio_button_tag('document_private', true, initial_private, style: 'float: left; margin-top: 5px !important;') %>
-      <%= label_tag('document_private_true', I18n.t('document_private'), style: 'float: left; text-align: left; width: auto;') %>
+      <%= label_tag('document_private_true', style: 'float: left; text-align: left; width: auto;') do %>
+        <%= tag.i(class: 'fa fa-lock', style: 'margin-right: 5px;') %>
+        <%= I18n.t('document_private') %>
+      <% end %>
       <%= radio_button_tag('document_private', false, !initial_private, style: 'float: left; margin-top: 5px !important;') %>
       <%= label_tag('document_private_false', I18n.t('document_public'), style: 'float: left; text-align: left; width: auto;') %>
     </p>
