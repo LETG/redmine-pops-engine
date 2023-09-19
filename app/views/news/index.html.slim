@@ -23,7 +23,7 @@ h2
       header
         h3
           - if news.is_private?
-            = tag.i(class: 'fa fa-lock', style: 'margin-right: 10px;')
+            = tag.i(class: 'fa fa-lock', title: I18n.t('news_private'), style: 'margin-right: 10px;')
           = avatar(news.author)
           = link_to_project(news.project) + ': ' unless news.project == @project
           = link_to h(news.title), news_path(news)

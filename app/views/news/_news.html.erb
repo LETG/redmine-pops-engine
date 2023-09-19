@@ -1,6 +1,6 @@
 <p>
   <% if news.is_private? %>
-    <%= tag.i(class: 'fa fa-lock', style: 'margin-right: 5px;') %>
+    <%= tag.i(class: 'fa fa-lock', title: I18n.t('news_private'), style: 'margin-right: 5px;') %>
   <% end %>
   <%= link_to_project(news.project) + ': ' unless @project %>
   <%= link_to h(news.display_title), news_path(news) %>

@@ -10,7 +10,7 @@
 
 <h2>
   <% if @news.is_private? %>
-    <%= tag.i(class: 'fa fa-lock', style: 'margin-right: 10px;') %>
+    <%= tag.i(class: 'fa fa-lock', title: I18n.t('news_private'), style: 'margin-right: 10px;') %>
   <% end %>
   <%= avatar(@news.author) %> <%=h @news.title %>
 </h2>
