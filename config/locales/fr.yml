@@ -36,5 +36,8 @@ fr:
   label_hal_url: Recherche sur HAL (Sur le titre de 6 caractères minimum)
   label_hal_url_list: Liste des articles liés à la recherche
 
-  resource_private: Ressource privée
-  resource_public: Ressource publique
+  document_private: Document privé
+  document_public: Document public
+
+  news_private: Annonce privée
+  news_public: Annonce publique

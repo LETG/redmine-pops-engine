@@ -59,6 +59,14 @@ $(document).ready(function() {
       visibleToPublicInput.checked = (e.target.value !== "true");
     }
   });
+
+  $('body').on("change", "input[name='news_private']", (e) => {
+    const privateNewsInput = document.querySelector("#news_private");
+
+    if (privateNewsInput) {
+      privateNewsInput.checked = (e.target.value === "true");
+    }
+  });
 });
 
 function activateSearch(url, options) {
