@@ -51,6 +51,14 @@ $(document).ready(function() {
         $("#document_title").select2('destroy');
     }
   });
+
+  $('body').on("change", "input[name='document_private']", (e) => {
+    const visibleToPublicInput = document.querySelector("#document_visible_to_public");
+
+    if (visibleToPublicInput) {
+      visibleToPublicInput.checked = (e.target.value !== "true");
+    }
+  });
 });
 
 function activateSearch(url, options) {

@@ -49,6 +49,9 @@
                     .document-file.file-icon-default
             .document-infos.document-cell
               .document-info-header
+                - if d.private?
+                  .document-info-icon
+                    span.fa.fa-lock title="#{I18n.t('resource_private')}"
                 .document-info-title
                   = d.title
                 .document-info-tags

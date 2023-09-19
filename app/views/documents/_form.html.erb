@@ -11,19 +11,23 @@
     </p>
   <% end %>
   <br/>
+
+  <% initial_private = f.object.visible_to_public.nil? ? false : !f.object.visible_to_public %>
+  <p style="display: none;"><%= f.check_box :visible_to_public, { checked: !initial_private } %></p>
+
+  <% if f.object.project && f.object.project.is_public %>
+    <p>
+      <%= radio_button_tag('document_private', true, initial_private, style: 'float: left; margin-top: 5px !important;') %>
+      <%= label_tag('document_private_true', I18n.t('resource_private'), style: 'float: left; text-align: left; width: auto;') %>
+      <%= radio_button_tag('document_private', false, !initial_private, style: 'float: left; margin-top: 5px !important;') %>
+      <%= label_tag('document_private_false', I18n.t('resource_public'), style: 'float: left; text-align: left; width: auto;') %>
+    </p>
+  <% end %>
+
   <p>
     <%= f.check_box :visible_in_timeline, { checked: @document.visible_in_timeline, label: '', style: "float: left; margin-top: 5px !important;" } %>
     <label for="visible_in_timeline" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_visible_in_timeline") %></label>
   </p>
-  
-  <% if f.object.project && f.object.project.is_public %>
-    <p>
-      <%= f.check_box :visible_to_public, { checked: @document.visible_to_public, label: '', style: "float: left; margin-top: 5px !important;" } %>
-      <label for="visible_to_public" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_visible_to_public") %></label>
-    </p>
-  <% else %>
-    <p style="display: none;"><%= f.check_box :visible_to_public, { checked: false } %></p>
-  <% end %>
 
   <p>
     <%= f.check_box :notifications_disabled, { checked: @document.notifications_disabled, label: '', style: "float: left; margin-top: 5px !important;" } %>
@@ -65,8 +69,4 @@
     </div>
   <% end %>
 
-
 </div>
-
-
-

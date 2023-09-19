@@ -1,6 +1,10 @@
 Document.class_eval do
   safe_attributes :notifications_disabled
 
+  def private?
+    !self.visible_to_public? || !self.project.is_public?
+  end
+
   private
 
   def send_notification
