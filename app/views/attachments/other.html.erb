@@ -6,6 +6,14 @@
        'audio'
      end %>
 
+  <script type="text/javascript">
+    $( document ).ready(function() {
+      $('#preview_frame').load(function() {
+          $('#ajax-indicator').hide();
+      });
+    });
+  </script>
+
   <% if @attachment.preview_convertible? %>
     <style>
       #preview_pane {
@@ -13,6 +21,10 @@
       }
       #preview_pane > object, #preview_pane > iframe {
         width: 100% !important;
+        height: calc(100vh - 200px) !important;
+      }
+      span.pagination.filepreview {
+        margin: 0 !important;
       }
     </style>
 
@@ -65,13 +77,6 @@
           ) %>
       </div>
     <%- else %>
-      <script type="text/javascript">  
-        $( document ).ready(function() {
-          $('#preview_frame').load(function() {
-              $('#ajax-indicator').hide();
-          });
-        });
-      </script>
       <div id="preview_repository_entry_top">
         <%= call_hook(:preview_attachment_top, :attachment => @attachment, :project => @project, :params => request.query_parameters.merge(:request => request).symbolize_keys ) %>
       </div>
