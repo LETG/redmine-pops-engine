@@ -35,21 +35,22 @@ class ResourcesController < ApplicationController
       resource_data = {
         common: { # Champs communs (annonces et documents)
           title: nil,
-          visible_in_timeline: false,
           notifications_disabled: false,
           description: nil
         },
         news: { # Champs spécifiques d'une annonce
+          visible_in_timeline: false,
           private: false,
           summary: nil,
-          announcement_date: Time.zone.now.beginning_of_day,
+          announcement_date: mail.date.beginning_of_day,
           author: author
         },
         document: { # Champs spécifiques d'un document
+          visible_in_timeline: true,
           visible_to_public: true,
           category: document_categories.find { |dc| dc.name.downcase == 'gestion de projet' },
           tag_list: document_tags.find { |dt| dt.name.downcase == 'document' }&.name,
-          created_date: Time.zone.now.beginning_of_day,
+          created_date: mail.date.beginning_of_day,
           url_to: nil
         }
       }
@@ -92,7 +93,11 @@ class ResourcesController < ApplicationController
           case line
           when /--.*frise.*:/
             # Parsing de l'affichage de la ressource dans la timeline
-            resource_data[:common][:visible_in_timeline] = line.split(':').last.strip.downcase == 'oui'
+            if resource_type == :news
+              resource_data[:news][:visible_in_timeline] = line.split(':').last.strip.downcase == 'oui'
+            else
+              resource_data[:document][:visible_in_timeline] = line.split(':').last.strip.downcase == 'oui'
+            end
           when /--.*notifications?.*:/
             # Parsing de l'activation ou non des notifications
             resource_data[:common][:notifications_disabled] = line.split(':').last.strip.downcase == 'non'
@@ -131,7 +136,7 @@ class ResourcesController < ApplicationController
           else
             # Autre contenu textuel => ajout à la description
             resource_data[:common][:description] ||= []
-            resource_data[:common][:description] << line
+            resource_data[:common][:description] << line unless line.starts_with?('--')
           end
         end
 
@@ -149,6 +154,13 @@ class ResourcesController < ApplicationController
 
       # Création de la ressource dans chaque projet concerné
       projects.each do |project|
+        if author.present?
+          # Passage au projet suivant si le compte Redmine de l'auteur n'a pas les droits nécessaires
+          project_roles = author.roles_for_project(project).map(&:permissions).flatten.uniq
+          next if resource_type == :news && !project_roles.include?(:manage_news)
+          next if resource_type == :document && !project_roles.include?(:add_documents)
+        end
+
         resource =
           if resource_type == :news
             project.news.create!(resource_data[:common].merge(resource_data[:news]))
