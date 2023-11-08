@@ -36,3 +36,9 @@ fr:
   label_participant_plural: Participants
   label_hal_url: Recherche sur HAL (Sur le titre de 6 caractères minimum)
   label_hal_url_list: Liste des articles liés à la recherche
+
+  document_private: Accès restreint
+  document_public: Accès public
+
+  news_private: Visibilité restreinte
+  news_public: Visibilité publique

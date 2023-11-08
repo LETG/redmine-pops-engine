@@ -13,5 +13,7 @@ PopsRedmineEngine::Engine.routes.draw do
         get 'timeline'
       end
     end
+
+    resources :resources, only: [:create]
   end
 end

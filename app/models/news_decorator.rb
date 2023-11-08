@@ -25,6 +25,10 @@ News.class_eval do
     users
   end
 
+  def is_private?
+    self.private? || !self.project.is_public?
+  end
+
   private
     def send_notification
       return if self.notifications_disabled?

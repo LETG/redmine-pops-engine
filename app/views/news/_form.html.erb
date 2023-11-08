@@ -9,9 +9,16 @@
 </p>
 
 <% if @project && @project.is_public %>
+  <% initial_private = f.object.private.nil? ? false : f.object.private %>
+  <p style="display: none;"><%= f.check_box :private, value: true, checked: initial_private %></p>
   <p>
-    <%= f.check_box :private, { checked: (f.object.private || false), label: '', style: "float: left; margin-top: 5px !important;" } %>
-    <label for="private" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_private") %></label>
+    <%= radio_button_tag('news_private', true, initial_private, style: 'float: left; margin-top: 5px !important;') %>
+    <%= label_tag('news_private_true', style: 'float: left; text-align: left; width: auto;') do %>
+      <%= tag.i(class: 'fa fa-lock', style: 'margin-right: 5px;') %>
+      <%= I18n.t('news_private') %>
+    <% end %>
+    <%= radio_button_tag('news_private', false, !initial_private, style: 'float: left; margin-top: 5px !important;') %>
+    <%= label_tag('news_private_false', I18n.t('news_public'), style: 'float: left; text-align: left; width: auto;') %>
   </p>
 <% else %>
   <p style="display: none;"><%= f.check_box :private, value: true, checked: true %></p>
