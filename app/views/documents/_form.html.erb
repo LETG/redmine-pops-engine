@@ -29,6 +29,13 @@
     <%= f.check_box :notifications_disabled, { checked: @document.notifications_disabled, label: '', style: "float: left; margin-top: 5px !important;" } %>
       <label for="notifications_disabled" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_notifications_disabled") %></label>
   </p>
+
+  <% if @project && @project.parent %>
+    <p>
+      <%= f.check_box :notify_users_in_parent_projects, { checked: (f.object.notify_users_in_parent_projects || false), label: '', style: "float: left; margin-top: 5px !important;" } %>
+      <label for="notify_users_in_parent_projects" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_notify_users_in_parent_projects") %></label>
+    </p>
+  <% end %>
 </div>
 
 <% render partial: 'documents/datacite/search' %>

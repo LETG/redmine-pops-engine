@@ -9,14 +9,32 @@
 </p>
 
 <% if @project && @project.is_public %>
-  <p><%= f.check_box :private, value: (f.object.private || true) %></p>
+  <p>
+    <%= f.check_box :private, { checked: (f.object.private || false), label: '', style: "float: left; margin-top: 5px !important;" } %>
+    <label for="private" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_private") %></label>
+  </p>
 <% else %>
   <p style="display: none;"><%= f.check_box :private, value: true, checked: true %></p>
 <% end %>
 
-<p><%= f.check_box :visible_in_timeline, value: (f.object.visible_in_timeline || true) %></p>
-<p><%= f.check_box :notifications_disabled, value: (f.object.notifications_disabled || false) %></p>
-<p><%= f.text_field :announcement_date, class: "datepicker", value: f.object.timeline_display_date('%d/%m/%Y') %></p>
+<p>
+  <%= f.check_box :visible_in_timeline, { checked: (f.object.visible_in_timeline || false), label: '', style: "float: left; margin-top: 5px !important;" } %>
+  <label for="visible_in_timeline" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_visible_in_timeline") %></label>
+</p>
+
+<p>
+  <%= f.check_box :notifications_disabled, { checked: (f.object.notifications_disabled || false), label: '', style: "float: left; margin-top: 5px !important;" } %>
+  <label for="notifications_disabled" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_notifications_disabled") %></label>
+</p>
+
+<% if @project && @project.parent %>
+  <p>
+    <%= f.check_box :notify_users_in_parent_projects, { checked: (f.object.notify_users_in_parent_projects || false), label: '', style: "float: left; margin-top: 5px !important;" } %>
+    <label for="notify_users_in_parent_projects" style="float: left; text-align: left; width: auto;"><%= I18n.t("field_notify_users_in_parent_projects") %></label>
+  </p>
+<% end %>
+
+<p style="margin-top: 15px;"><%= f.text_field :announcement_date, class: "datepicker", value: f.object.timeline_display_date('%d/%m/%Y') %></p>
 
 <br/>
 <p class="<%= (@news.errors && @news.errors.has_key?(:summary) ? 'with-errors' : '') %>">

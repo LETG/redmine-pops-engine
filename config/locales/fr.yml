@@ -13,6 +13,7 @@ fr:
   field_url: Site web laboratoire
   field_visible_to_public: Visible au public
   field_notifications_disabled: Désactiver les notifications
+  field_notify_users_in_parent_projects: Notifier les utilisateurs des projets parents
 
   field_accronym: Accronyme
   field_objectifs: Objectifs
