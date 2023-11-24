@@ -40,6 +40,12 @@
       display: none;
     }
   }
+  #news-placeholder-marker,
+  #gestion-de-projet-placeholder-marker,
+  #ressources-placeholder-marker,
+  #productions-placeholder-marker {
+    display: none;
+  }
 }
 
 .tl-timenav {
