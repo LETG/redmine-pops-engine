@@ -1,11 +1,9 @@
 .project-show {
-  .row.max-width {
-    min-height: 53px;
-  }
+  padding-top: 65px;
 }
 
 #timeline-embed {
-  height: 280px !important;
+  height: 250px !important;
   position: relative;
   .tl-storyslider {
     height: 0px !important;
@@ -39,6 +37,12 @@
     .tl-timemarker-content-container {
       display: none;
     }
+  }
+  #news-placeholder-marker,
+  #gestion-de-projet-placeholder-marker,
+  #ressources-placeholder-marker,
+  #productions-placeholder-marker {
+    display: none;
   }
 }
 
