@@ -36,6 +36,7 @@ class ResourcesController < ApplicationController
         common: { # Champs communs (annonces et documents)
           title: nil,
           notifications_disabled: false,
+          notify_users_in_parent_projects: false,
           description: nil
         },
         news: { # Champs spécifiques d'une annonce
