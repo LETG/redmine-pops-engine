@@ -5,7 +5,7 @@ Document.class_eval do
   def notified_users
     projects = Array.wrap(project)
 
-    if self.notify_users_in_parent_projects
+    if (self.notify_users_in_parent_projects rescue false)
       p_proj = project.parent
 
       while p_proj
