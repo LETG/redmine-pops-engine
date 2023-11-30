@@ -72,7 +72,7 @@ module MailerPops
     private
       def notification_project
         @project   = (@issue.project rescue nil)                       if @issue
-        @project ||= (@document.project rescue nil)                    if @project
+        @project ||= (@document.project rescue nil)                    if @document
         @project ||= (@attachments.first.container.project rescue nil) if @attachments
         @project ||= (@news.project rescue nil)                        if @news
         @project ||= (@message.board.project rescue nil)               if @message
