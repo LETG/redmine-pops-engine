@@ -23,7 +23,7 @@
                   = link_to @document.url_to, target: "_blank", title: @document.url_to do
                     .document-file.file-icon-link
               - @document.attachments.each do |a|
-                = link_to a, target: "_blank", title: a.filename do
+                = link_to a, title: a.filename do
                   - ext = File.extname(a.filename)
                   - if imageTypes.include?(ext)
                     .document-file.file-icon-image
