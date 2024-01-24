@@ -20,9 +20,11 @@ $document-line-margin: 3px;
 }
 .project-document-new {
   margin-bottom: 10px;
-  overflow: hidden;
   margin-right: 0;
   float: none;
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 .project-documents {
   .project-documents-title {
