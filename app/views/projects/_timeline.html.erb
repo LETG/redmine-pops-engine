@@ -9,7 +9,7 @@
   $(document).ready(function(){
     $.ajax({
       type: 'get',
-      url: '/projects/'+$("#project_id").attr('value')+'/timeline',
+      url: '/pops/projects/'+$("#project_id").attr('value')+'/timeline',
       success: function (data) {
         /*createStoryJS({
           width: "100%",
