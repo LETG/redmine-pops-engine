@@ -14,7 +14,7 @@
     });
   </script>
 
-  <% if @attachment.preview_convertible? %>
+  <% if @attachment.respond_to?(:preview_convertible?) && @attachment.preview_convertible? %>
     <style>
       #preview_pane {
         padding-top: 0 !important;
